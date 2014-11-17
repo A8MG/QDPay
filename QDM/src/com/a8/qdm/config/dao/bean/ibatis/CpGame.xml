@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.CpGameDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.CpGame" id="parameterCpGame" />
+	<resultMap type="com.a8.qdm.config.dao.bean.CpGame" id="resultCpGame" />
+
+	<select id="queryCpGameList" parameterType="String" resultMap="resultCpGame">
+		select cpid, gameid from cp_game where cpid in
+		<foreach item="cpId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{cpId}
+		</foreach>
+	</select>
+
+	<insert id="addCpGame" parameterMap="parameterCpGame">
+		insert into cp_game (cpid,
+		gameid) values (#{cpId}, #{gameId})
+	</insert>
+
+	<delete id="deleteCpGame" parameterType="String">
+		delete from cp_game where gameid in
+		<foreach item="gameId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{gameId}
+		</foreach>
+	</delete>
+</mapper>

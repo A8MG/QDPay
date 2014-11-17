@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.SimDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.Sim" id="parameterSim" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Sim" id="resultSim" />
+
+	<select id="querySim" parameterMap="parameterSim" resultMap="resultSim">
+		select * from siminfo where simtype = #{simType} and applytype =
+		#{applyType} and price = #{price}
+	</select>
+
+	<select id="querySimByCommand" parameterType="String"
+		resultType="String">
+		select price from siminfo where command = #{command}
+	</select>
+
+	<select id="querySimById" parameterType="String" resultMap="resultSim">
+		select * from siminfo where simid = #{simId}
+	</select>
+
+	<select id="querySimCount" parameterMap="parameterSim"
+		resultType="int">
+		select count(simid) from siminfo where
+		<if test="simType != ''">
+			simtype = #{simType} and
+		</if>
+		command like concat('%',
+		#{command},
+		'%')
+		and price like concat('%',
+		#{price}, '%')
+	</select>
+
+	<select id="querySimList" parameterType="Map" resultMap="resultSim">
+		select
+		simid, simtype, command,
+		simserver, price, applytype,
+		date_format(modifytime, '%Y-%m-%d %T')
+		modifytime from siminfo where
+		<if test="simType != ''">
+			simtype = #{simType} and
+		</if>
+		command like concat('%',
+		#{command}, '%')
+		and price like concat('%',
+		#{price}, '%')
+		order by
+		modifytime desc
+		limit #{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addSim" parameterMap="parameterSim">
+		insert into siminfo (simtype,
+		command, simserver, price, applytype) values (#{simType}, #{command},
+		#{simServer}, #{price}, #{applyType})
+	</insert>
+
+	<update id="updateSim" parameterMap="parameterSim">
+		update siminfo set command =
+		#{command}, simserver = #{simServer}, price = #{price} where simid =
+		#{simId}
+	</update>
+
+	<delete id="deleteSim" parameterType="String">
+		delete from siminfo where simid in
+		<foreach item="simId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{simId}
+		</foreach>
+	</delete>
+</mapper>

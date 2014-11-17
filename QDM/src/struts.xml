@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginInterceptor"
+				class="com.a8.qdm.login.interceptor.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="interceptorStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="interceptorStack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="login" type="redirectAction">login</result>
+			<result name="error">/WEB-INF/page/error.jsp</result>
+		</global-results>
+	</package>
+
+	<include file="com/a8/qdm/login/login-struts.xml"></include>
+	<include file="com/a8/qdm/sdk/sdk-struts.xml"></include>
+	<include file="com/a8/qdm/config/config-struts.xml"></include>
+	<include file="com/a8/qdm/query/query-struts.xml"></include>
+</struts>

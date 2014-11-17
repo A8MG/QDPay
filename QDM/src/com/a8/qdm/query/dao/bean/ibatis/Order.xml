@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.query.dao.OrderDao">
+	<parameterMap type="com.a8.qdm.query.dao.bean.Order" id="parameterOrder" />
+	<resultMap type="com.a8.qdm.query.dao.bean.Order" id="resultOrder" />
+	<resultMap type="com.a8.qdm.query.action.bean.OrderWebBean"
+		id="resultOrderWebBean" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Cp" id="resultCp" />
+	<resultMap type="com.a8.qdm.query.dao.bean.Crop" id="crop" />
+
+	<select id="queryOrderBySim" parameterMap="parameterOrder"
+		resultMap="resultOrder">
+		select *
+		from orderinfo where usernumber = #{usernumber} and
+		linkid =
+		#{linkid}
+	</select>
+
+	<select id="queryOrderByNo" parameterType="String" resultMap="resultOrder">
+		select *
+		from orderinfo where orderno = #{orderNo}
+	</select>
+
+	<select id="queryCpBySim" parameterMap="parameterOrder"
+		resultMap="resultCp">
+		select
+		c.* from orderinfo o, cp_game cg, cpinfo c
+		where
+		o.gameid = cg.gameid
+		and cg.cpid = c.cpid and o.usernumber =
+		#{usernumber} and o.linkid =
+		#{linkid}
+	</select>
+
+	<select id="queryCpByNo" parameterType="String" resultMap="resultCp">
+		select
+		c.* from orderinfo o, cp_game cg, cpinfo c
+		where
+		o.gameid =
+		cg.gameid
+		and cg.cpid = c.cpid and o.orderno =
+		#{orderNo}
+	</select>
+
+	<select id="queryCpCrop" resultMap="crop">
+		select c.cpname cpName,
+		sum(o.price) price, date_format(o.modifytime, '%d') dayNo
+		from
+		orderinfo o, cpinfo c, cp_game cg
+		where c.cpid = cg.cpid and cg.gameid
+		= o.gameid and state = '1'
+		and date_format(o.modifytime, '%Y%m') =
+		date_format(now(), '%Y%m') - 1
+		group by c.cpname,
+		date_format(o.modifytime, '%Y%m%d');
+	</select>
+
+	<select id="queryGameCrop" parameterType="String" resultMap="crop">
+		select g.gamename gameName,
+		sum(o.price) price,
+		date_format(o.modifytime, '%d') dayNo
+		from
+		orderinfo o, gameinfo g,
+		cp_game cg
+		where
+		o.gameid = g.gameid and g.gameid = cg.gameid and
+		cg.cpid = #{cpId} and
+		o.state =
+		'1' and o.reply != '2'
+		and
+		date_format(o.modifytime,
+		'%Y%m') =
+		date_format(now(),
+		'%Y%m') -
+		1
+		group by
+		g.gamename,
+		date_format(o.modifytime, '%Y%m%d');
+	</select>
+
+	<select id="queryOrderList" parameterType="Map" resultMap="resultOrderWebBean">
+		select o.orderno, o.prop,
+		o.price, o.state, o.sms, o.reply,
+		g.gamename,
+		p.payname,
+		o.modifytime
+		from
+		orderinfo o,
+		pay_order po, payinfo p, gameinfo g, cp_game cg where
+		o.orderno =
+		po.orderno
+		and
+		po.payid = p.payid and o.gameid = g.gameid and
+		g.gameid = cg.gameid
+		<if test="cpId != ''">
+			and cg.cpid = #{cpId} and o.reply != '2'
+		</if>
+		and
+		o.orderno
+		like
+		concat('%', #{orderNo}, '%')
+		<if test="gameId != ''">
+			and o.gameid = #{gameId}
+		</if>
+		<if test="startTime != ''">
+			and o.modifytime &gt;= #{startTime}
+		</if>
+		<if test="endTime != ''">
+			and o.modifytime &lt;= concat(#{endTime}, ' 23:59:59')
+		</if>
+		order by
+		o.modifytime
+		desc
+		limit #{startIndex}, #{pageSize}
+	</select>
+
+	<select id="queryOrderCount" parameterType="Map" resultType="int">
+		select count(o.orderno)
+		from orderinfo o, cp_game cg where o.gameid =
+		cg.gameid
+		<if test="cpId != ''">
+			and cg.cpid = #{cpId} and o.reply != '2'
+		</if>
+		and o.orderno
+		like
+		concat('%',
+		#{orderNo}, '%')
+		<if test="gameId != ''">
+			and o.gameid = #{gameId}
+		</if>
+		<if test="startTime != ''">
+			and o.modifytime &gt;= #{startTime}
+		</if>
+		<if test="endTime != ''">
+			and o.modifytime &lt;= concat(#{endTime}, ' 23:59:59')
+		</if>
+	</select>
+
+	<insert id="addOrder" parameterMap="parameterOrder">
+		insert into orderinfo
+		(orderno, prop, price, state, sms, reply, gameid, usernumber,
+		linkid,
+		modifytime)
+		values (#{orderNo},
+		#{prop},
+		#{price}, #{state}, #{sms},
+		#{reply},
+		#{gameId}, #{usernumber}, #{linkid}, #{modifyTime})
+	</insert>
+
+	<update id="updateSms" parameterType="String">
+		update orderinfo set sms =
+		1 where orderno = #{orderNo}
+	</update>
+
+	<update id="updateState" parameterMap="parameterOrder">
+		update orderinfo set
+		state
+		= 1, modifytime = #{modifyTime} where orderno = #{orderNo}
+	</update>
+
+	<update id="updateReply" parameterMap="parameterOrder">
+		update orderinfo set
+		reply
+		= #{reply} where orderno = #{orderNo}
+	</update>
+
+	<delete id="deleteOrder" parameterType="String">
+		delete from orderinfo where orderno in
+		<foreach item="orderNo" index="index" collection="array" open="("
+			separator="," close=")">
+			#{orderNo}
+		</foreach>
+	</delete>
+</mapper>

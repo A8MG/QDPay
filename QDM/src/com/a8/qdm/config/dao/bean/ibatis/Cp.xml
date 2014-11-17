@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.CpDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.Cp" id="parameterCp" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Cp" id="resultCp" />
+
+
+	<select id="queryAllCp" resultMap="resultCp">
+		select cpid, cpname from
+		cpinfo
+		order by modifytime desc
+	</select>
+
+	<select id="queryCp" parameterType="String" resultMap="resultCp">
+		select
+		cpid, cpname, httpurl from
+		cpinfo where cpid = #{cpId}
+	</select>
+
+	<select id="queryCpCount" parameterMap="parameterCp" resultType="int">
+		select count(cpid) from cpinfo where cpid like concat('%', #{cpId},
+		'%') and cpname like concat('%', #{cpName}, '%')
+	</select>
+
+	<select id="queryCpList" parameterType="Map" resultMap="resultCp">
+		select
+		cpid, cpname, httpurl,
+		keyt, date_format(modifytime, '%Y-%m-%d
+		%T')
+		modifytime from cpinfo where cpid like concat('%', #{cpId}, '%')
+		and
+		cpname like concat('%', #{cpName}, '%')
+		order by modifytime desc
+		limit
+		#{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addCp" parameterMap="parameterCp">
+		insert into cpinfo (cpid,
+		cpname, httpurl, keyt) values (#{cpId}, #{cpName}, #{httpUrl},
+		#{keyt})
+	</insert>
+
+	<update id="updateCp" parameterMap="parameterCp">
+		update cpinfo set cpname =
+		#{cpName}, httpurl = #{httpUrl} where cpid = #{cpId}
+	</update>
+
+	<delete id="deleteCp" parameterType="String">
+		delete from cpinfo where cpid in
+		<foreach item="cpId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{cpId}
+		</foreach>
+	</delete>
+</mapper>

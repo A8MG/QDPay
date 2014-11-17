@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+					http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+					http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="sdkAction" class="com.a8.qdm.sdk.action.SdkAction">
+		<property name="deviceService" ref="deviceService"></property>
+		<property name="gamePayService" ref="gamePayService"></property>
+	</bean>
+
+	<bean id="smsAction" class="com.a8.qdm.sdk.action.SmsAction">
+		<property name="simService" ref="simService"></property>
+		<property name="orderService" ref="orderService"></property>
+		<property name="gameService" ref="gameService"></property>
+	</bean>
+
+	<bean id="aliAction" class="com.a8.qdm.sdk.action.AliAction">
+		<property name="orderService" ref="orderService"></property>
+		<property name="gameService" ref="gameService"></property>
+	</bean>
+
+	<bean id="upmpAction" class="com.a8.qdm.sdk.action.UpmpAction">
+		<property name="orderService" ref="orderService"></property>
+		<property name="gameService" ref="gameService"></property>
+	</bean>
+</beans>

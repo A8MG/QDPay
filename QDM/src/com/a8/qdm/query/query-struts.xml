@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="query" extends="default">
+		<action name="home">
+			<result>/WEB-INF/page/home.jsp</result>
+		</action>
+		<action name="homeAjax" class="com.a8.qdm.query.ajax.HomeAjax"
+			method="homeAjax">
+		</action>
+
+		<action name="queryOrderList" class="com.a8.qdm.query.action.OrderAction"
+			method="query">
+			<result>/WEB-INF/page/order/orderlist.jsp</result>
+		</action>
+		<action name="deleteOrder" class="com.a8.qdm.query.action.OrderAction"
+			method="deleteOrder">
+			<result type="redirectAction">queryOrderList</result>
+		</action>
+
+		<action name="queryActionList" class="com.a8.qdm.query.action.ActionAction"
+			method="query">
+			<result>/WEB-INF/page/action/actionlist.jsp</result>
+		</action>
+	</package>
+</struts>

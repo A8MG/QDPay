@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="config" extends="default">
+		<action name="queryUserList" class="com.a8.qdm.config.action.UserAction"
+			method="query">
+			<result>/WEB-INF/page/user/userlist.jsp</result>
+		</action>
+		<action name="toAddUser" class="com.a8.qdm.config.action.UserAction"
+			method="toAddUser">
+			<result>/WEB-INF/page/user/adduser.jsp</result>
+		</action>
+		<action name="addUser" class="com.a8.qdm.config.action.UserAction"
+			method="addUser">
+			<result type="redirectAction">queryUserList</result>
+		</action>
+		<action name="toUpdateUser" class="com.a8.qdm.config.action.UserAction"
+			method="toUpdateUser">
+			<result>/WEB-INF/page/user/updateuser.jsp</result>
+		</action>
+		<action name="updateUser" class="com.a8.qdm.config.action.UserAction"
+			method="updateUser">
+			<result type="redirectAction">queryUserList</result>
+		</action>
+		<action name="deleteUser" class="com.a8.qdm.config.action.UserAction"
+			method="deleteUser">
+			<result type="redirectAction">queryUserList</result>
+		</action>
+		<action name="checkUserName" class="com.a8.qdm.config.ajax.UserAjax"
+			method="checkUserName">
+		</action>
+
+		<action name="queryCpList" class="com.a8.qdm.config.action.CpAction"
+			method="query">
+			<result>/WEB-INF/page/cp/cplist.jsp</result>
+		</action>
+		<action name="toAddCp">
+			<result>/WEB-INF/page/cp/addcp.jsp</result>
+		</action>
+		<action name="addCp" class="com.a8.qdm.config.action.CpAction"
+			method="addCp">
+			<result type="redirectAction">queryCpList</result>
+		</action>
+		<action name="toUpdateCp" class="com.a8.qdm.config.action.CpAction"
+			method="toUpdateCp">
+			<result>/WEB-INF/page/cp/updatecp.jsp</result>
+		</action>
+		<action name="updateCp" class="com.a8.qdm.config.action.CpAction"
+			method="updateCp">
+			<result type="redirectAction">queryCpList</result>
+		</action>
+		<action name="deleteCp" class="com.a8.qdm.config.action.CpAction"
+			method="deleteCp">
+			<result type="redirectAction">queryCpList</result>
+		</action>
+		<action name="cpBindGame" class="com.a8.qdm.config.ajax.CpAjax"
+			method="cpBindGame">
+		</action>
+		<action name="checkCpId" class="com.a8.qdm.config.ajax.CpAjax"
+			method="checkCpId">
+		</action>
+
+		<action name="queryGameList" class="com.a8.qdm.config.action.GameAction"
+			method="query">
+			<result>/WEB-INF/page/game/gamelist.jsp</result>
+		</action>
+		<action name="toAddGame" class="com.a8.qdm.config.action.GameAction"
+			method="toAddGame">
+			<result>/WEB-INF/page/game/addgame.jsp</result>
+		</action>
+		<action name="addGame" class="com.a8.qdm.config.action.GameAction"
+			method="addGame">
+			<result type="redirectAction">queryGameList</result>
+		</action>
+		<action name="toUpdateGame" class="com.a8.qdm.config.action.GameAction"
+			method="toUpdateGame">
+			<result>/WEB-INF/page/game/updategame.jsp</result>
+		</action>
+		<action name="updateGame" class="com.a8.qdm.config.action.GameAction"
+			method="updateGame">
+			<result type="redirectAction">queryGameList</result>
+		</action>
+		<action name="deleteGame" class="com.a8.qdm.config.action.GameAction"
+			method="deleteGame">
+			<result type="redirectAction">queryGameList</result>
+		</action>
+		<action name="ajaxPay" class="com.a8.qdm.config.ajax.GameAjax"
+			method="ajaxPay">
+		</action>
+		<action name="checkGameId" class="com.a8.qdm.config.ajax.GameAjax"
+			method="checkGameId">
+		</action>
+
+		<action name="queryPayList" class="com.a8.qdm.config.action.PayAction"
+			method="query">
+			<result>/WEB-INF/page/pay/paylist.jsp</result>
+		</action>
+		<action name="toAddPay">
+			<result>/WEB-INF/page/pay/addpay.jsp</result>
+		</action>
+		<action name="addPay" class="com.a8.qdm.config.action.PayAction"
+			method="addPay">
+			<result type="redirectAction">queryPayList</result>
+		</action>
+		<action name="toUpdatePay" class="com.a8.qdm.config.action.PayAction"
+			method="toUpdatePay">
+			<result>/WEB-INF/page/pay/updatepay.jsp</result>
+		</action>
+		<action name="updatePay" class="com.a8.qdm.config.action.PayAction"
+			method="updatePay">
+			<result type="redirectAction">queryPayList</result>
+		</action>
+		<action name="deletePay" class="com.a8.qdm.config.action.PayAction"
+			method="deletePay">
+			<result type="redirectAction">queryPayList</result>
+		</action>
+		<action name="payBindGame" class="com.a8.qdm.config.ajax.PayAjax"
+			method="payBindGame">
+		</action>
+		<action name="checkPayId" class="com.a8.qdm.config.ajax.PayAjax"
+			method="checkPayId">
+		</action>
+
+		<action name="querySimList" class="com.a8.qdm.config.action.SimAction"
+			method="query">
+			<result>/WEB-INF/page/sim/simlist.jsp</result>
+		</action>
+		<action name="toAddSim">
+			<result>/WEB-INF/page/sim/addsim.jsp</result>
+		</action>
+		<action name="addSim" class="com.a8.qdm.config.action.SimAction"
+			method="addSim">
+			<result type="redirectAction">querySimList</result>
+		</action>
+		<action name="toUpdateSim" class="com.a8.qdm.config.action.SimAction"
+			method="toUpdateSim">
+			<result>/WEB-INF/page/sim/updatesim.jsp</result>
+		</action>
+		<action name="updateSim" class="com.a8.qdm.config.action.SimAction"
+			method="updateSim">
+			<result type="redirectAction">querySimList</result>
+		</action>
+		<action name="deleteSim" class="com.a8.qdm.config.action.SimAction"
+			method="deleteSim">
+			<result type="redirectAction">querySimList</result>
+		</action>
+	</package>
+</struts>

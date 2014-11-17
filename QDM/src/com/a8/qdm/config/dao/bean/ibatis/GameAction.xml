@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.GameActionDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.GameAction"
+		id="gameAction" />
+
+	<insert id="addGameAction" parameterMap="gameAction">
+		insert into game_action
+		(gameid, actionid) values (#{gameId}, #{actionId})
+	</insert>
+
+	<delete id="deleteGameAction" parameterType="String">
+		delete from game_action where gameid in
+		<foreach item="gameId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{gameId}
+		</foreach>
+	</delete>
+</mapper>

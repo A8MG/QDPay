@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="sdk" extends="default">
+		<action name="deviceSyn" class="com.a8.qdm.sdk.action.SdkAction"
+			method="deviceSyn">
+		</action>
+		<action name="queryPay" class="com.a8.qdm.sdk.action.SdkAction"
+			method="queryPay">
+		</action>
+
+		<action name="querySim" class="com.a8.qdm.sdk.action.SmsAction"
+			method="querySim">
+		</action>
+		<action name="updateSms" class="com.a8.qdm.sdk.action.SmsAction"
+			method="updateSms">
+		</action>
+		<action name="getSim" class="com.a8.qdm.sdk.action.SmsAction"
+			method="getSim">
+		</action>
+		<action name="getCmccNet" class="com.a8.qdm.sdk.action.SmsAction"
+			method="getCmccNet">
+		</action>
+		<action name="getCmccSingle" class="com.a8.qdm.sdk.action.SmsAction"
+			method="getCmccSingle">
+		</action>
+
+		<action name="aliWap" class="com.a8.qdm.sdk.action.AliAction"
+			method="aliWap">
+		</action>
+		<action name="aliSdk" class="com.a8.qdm.sdk.action.AliAction"
+			method="aliSdk">
+		</action>
+		<action name="aliWapNotify" class="com.a8.qdm.sdk.action.AliAction"
+			method="aliWapNotify">
+		</action>
+		<action name="aliSdkNotify" class="com.a8.qdm.sdk.action.AliAction"
+			method="aliSdkNotify">
+		</action>
+		<action name="aliCallback" class="com.a8.qdm.sdk.action.AliAction"
+			method="aliCallback">
+			<result name="success">/WEB-INF/page/alipay/success.jsp</result>
+			<result name="fail">/WEB-INF/page/alipay/fail.jsp</result>
+		</action>
+
+		<action name="upmpSdk" class="com.a8.qdm.sdk.action.UpmpAction"
+			method="upmpSdk">
+		</action>
+		<action name="upmpSdkNotify" class="com.a8.qdm.sdk.action.UpmpAction"
+			method="upmpSdkNotify">
+		</action>
+	</package>
+</struts>

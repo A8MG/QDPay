@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.query.dao.PayOrderDao">
+	<parameterMap type="com.a8.qdm.query.dao.bean.PayOrder"
+	id="payOrder" />
+	
+	<insert id="addPayOrder" parameterMap="payOrder">
+		insert into pay_order
+		(payid, orderno) values (#{payId}, #{orderNo})
+	</insert>
+</mapper>

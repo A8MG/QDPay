@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+	<package name="login" extends="default">
+		<action name="login" class="com.a8.qdm.login.action.LoginAction">
+			<result>/WEB-INF/page/login.jsp</result>
+		</action>
+		<action name="logout" class="com.a8.qdm.login.action.LoginAction"
+			method="logout">
+			<result>/WEB-INF/page/login.jsp</result>
+		</action>
+		<action name="index" class="com.a8.qdm.login.action.LoginAction"
+			method="login">
+		</action>
+		<action name="welcome">
+			<result>/WEB-INF/page/index.jsp</result>
+		</action>
+	</package>
+</struts>

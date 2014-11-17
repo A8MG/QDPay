@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.UserDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.User" id="parameterUser" />
+	<resultMap type="com.a8.qdm.config.dao.bean.User" id="resultUser" />
+
+	<select id="queryUser" parameterMap="parameterUser" resultMap="resultUser">
+		select *
+		from userinfo where username = #{username} and password =
+		#{password}
+	</select>
+
+	<select id="queryUserByName" parameterType="String" resultMap="resultUser">
+		select username, password, authority
+		from userinfo where
+		username =
+		#{username}
+	</select>
+
+	<select id="queryUserCount" parameterType="String" resultType="int">
+		select count(username) from userinfo where username like concat('%',
+		#{username}, '%')
+	</select>
+
+	<select id="queryUserList" parameterType="Map" resultMap="resultUser">
+		select u.username, u.password, c.cpname authority, date_format(u.modifytime,
+		'%Y-%m-%d %T') modifytime
+		from userinfo u left join cpinfo c on u.authority = c.cpid where u.username like
+		concat('%',
+		#{username}, '%') order by u.modifytime desc limit #{startIndex},
+		#{pageSize}
+	</select>
+
+	<insert id="addUser" parameterMap="parameterUser">
+		insert into userinfo
+		(username, password, authority) values (#{username}, #{password},
+		#{authority})
+	</insert>
+
+	<update id="updateUser" parameterMap="parameterUser">
+		update userinfo set
+		password = #{password} where username = #{username}
+	</update>
+
+	<delete id="deleteUser" parameterType="String">
+		delete from userinfo where username in
+		<foreach item="username" index="index" collection="array"
+			open="(" separator="," close=")">
+			#{username}
+		</foreach>
+	</delete>
+</mapper>

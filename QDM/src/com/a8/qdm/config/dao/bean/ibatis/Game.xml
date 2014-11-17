@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.GameDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.Game" id="parameterGame" />
+	<parameterMap type="com.a8.qdm.config.action.bean.GameWebBean"
+		id="parameterGameWebBean" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Game" id="resultGame" />
+	<resultMap type="com.a8.qdm.config.action.bean.GameWebBean"
+		id="resultGameWebBean" />
+
+	<select id="queryGameById" parameterType="String" resultMap="resultGameWebBean">
+		select g.gameid, g.gamename, g.chance, c.cpname from gameinfo g
+		,cp_game cg,
+		cpinfo c where g.gameid = cg.gameid and cg.cpid = c.cpid
+		and g.gameid
+		= #{gameId}
+	</select>
+
+	<select id="queryAllGame" parameterType="String" resultMap="resultGame">
+		select g.gameId, g.gamename from gameinfo g, cp_game cg
+		where g.gameid
+		= cg.gameid
+		<if test="_parameter != ''">
+			and cg.cpid = #{cpId}
+		</if>
+		order by
+		g.modifytime desc
+	</select>
+
+	<select id="queryGameCount" parameterMap="parameterGameWebBean"
+		resultType="int">
+		select count(g.gameid)
+		from gameinfo g
+		,cp_game cg, cpinfo
+		c
+		where g.gameid =
+		cg.gameid and cg.cpid = c.cpid
+		and g.gameid like
+		concat('%',
+		#{gameId}, '%')
+		and g.gamename like
+		concat('%', #{gameName},
+		'%')
+		and
+		c.cpname like concat('%', #{cpName},
+		'%')
+	</select>
+
+	<select id="queryGameList" parameterType="Map" resultMap="resultGameWebBean">
+		select
+		g.gameid,
+		g.gamename, g.chance, c.cpname,
+		date_format(g.modifytime,
+		'%Y-%m-%d %T')
+		modifytime from gameinfo g
+		,cp_game cg, cpinfo
+		c where
+		g.gameid =
+		cg.gameid and cg.cpid = c.cpid
+		and g.gameid like concat('%',
+		#{gameId},
+		'%')
+		and g.gamename like
+		concat('%', #{gameName}, '%')
+		and
+		c.cpname like
+		concat('%', #{cpName},
+		'%')
+		order by g.modifytime desc
+		limit
+		#{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addGame" parameterMap="parameterGame">
+		insert into gameinfo (gameid,
+		gamename, chance) values (#{gameId}, #{gameName}, #{chance})
+	</insert>
+
+	<update id="updateGame" parameterMap="parameterGame">
+		update gameinfo set
+		gamename = #{gameName}, chance = #{chance} where gameid = #{gameId}
+	</update>
+
+	<delete id="deleteGame" parameterType="String">
+		delete from gameinfo where gameid in
+		<foreach item="gameId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{gameId}
+		</foreach>
+	</delete>
+</mapper>

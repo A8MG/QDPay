@@ -1,0 +1,322 @@
+/********************************      Basic Structure      ********************************/
+body {
+	font: 13px "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei",
+		sans-serif;
+}
+
+/********************************      Elements styling      ********************************/
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 31px;
+	color: #fff;
+	position: absolute;
+	top: -1000px;
+	/* Remove this line and delete the logo (in the HTML) if you don't want an image as a logo */
+}
+
+h2 {
+	font-size: 26px;
+	padding: 0 0 10px 0;
+}
+
+h3 {
+	font-size: 16px;
+	padding: 0 0 10px 0;
+}
+
+h4 {
+	font-size: 16px;
+	padding: 0 0 5px 0;
+}
+
+h5 {
+	font-size: 14px;
+	padding: 0 0 5px 0;
+}
+
+h6 {
+	font-size: 12px;
+	padding: 0 0 5px 0;
+}
+
+a {
+	color: #57a000;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+}
+
+a:active {
+	color: #777;
+}
+
+a:focus {
+	outline: 1px;
+}
+
+strong {
+	font-weight: bold;
+	color: #333;
+}
+
+small {
+	font-size: 0.85em;
+}
+
+p {
+	padding: 5px 0 10px 0;
+	line-height: 1.6em;
+}
+
+/********************************      General Classes      ********************************/
+.clear {
+	clear: both;
+	height: 10px;
+}
+
+.align-left {
+	float: left;
+}
+
+.align-right {
+	float: right;
+}
+
+/************ Button ************/
+.button, input[type="submit"], input[type="button"] {
+	font: 11px "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei",
+		sans-serif;
+	display: inline-block;
+	background: #459300 url('../images/bg-button-green.gif') top left
+		repeat-x !important;
+	border: 1px solid #459300 !important;
+	padding: 4px 7px 4px 7px !important;
+	color: #fff !important;
+	cursor: pointer;
+}
+
+.button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+	text-decoration: none;
+}
+
+.button-space {
+	margin-left: 10px;
+}
+
+a.remove-link {
+	color: #bb0000;
+}
+
+a.remove-link:hover {
+	color: #000;
+}
+
+/********************************      Main Content      ********************************/
+
+/*************** Content Box ***************/
+.content-box {
+	border: 1px solid #ccc;
+	margin: 3px 0 0 0;
+	background: #fff;
+}
+
+.content-box-header {
+	background: #e5e5e5 url('../images/bg-content-box.gif') top left
+		repeat-x;
+	margin-top: 1px;
+	height: 40px;
+}
+
+.content-box-header h3 {
+	padding: 12px 15px 10px;
+	float: left;
+}
+
+.content-box-content {
+	padding: 20px 20px 0 20px;
+	font-size: 13px;
+	border-top: 1px solid #ccc;
+}
+
+/************ Table ************/
+#search table, #edit table {
+	width: 100%;
+}
+
+#search table thead th {
+	width: 30%;
+}
+
+#edit table td:first-child {
+	width: 30%;
+}
+
+#search table thead th:last-child {
+	width: 10%;
+}
+
+#search table tbody input[type="text"] {
+	width: 85%;
+}
+
+#edit table input[type="text"], #edit table input[type="password"] {
+	width: 50%;
+}
+
+#search table tbody select {
+	width: 85%;
+	height: 31px;
+}
+
+#edit table select {
+	width: 50%;
+	height: 31px;
+}
+
+#otherPay {
+	height: 30px;
+}
+
+.content-box table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.content-box table thead th {
+	font-weight: bold;
+	font-size: 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+.content-box table thead #checkbox {
+	width: 5%;
+}
+
+.content-box table thead #operation {
+	width: 7%;
+}
+
+.content-box tbody {
+	border-bottom: 1px solid #ddd;
+}
+
+.content-box tbody tr {
+	background: #fff;
+}
+
+.content-box tbody tr.alt-row {
+	background: #f3f3f3;
+}
+
+.content-box table td, .content-box table th {
+	padding: 10px;
+	line-height: 1.3em;
+}
+
+.content-box table tfoot td .bulk-actions {
+	margin-right: 15px;
+}
+
+/*************** Pagination ***************/
+.pagination {
+	text-align: right;
+	padding: 20px 0 5px 0;
+	font-size: 10px;
+}
+
+.pagination a {
+	margin: 0 5px 0 0;
+	padding: 3px 6px;
+}
+
+.pagination a.number {
+	border: 1px solid #ddd;
+}
+
+.pagination a.current {
+	background: #469400 url('../images/bg-button-green.gif') top left
+		repeat-x !important;
+	border-color: #459300 !important;
+	color: #fff !important;
+}
+
+.pagination a.current:hover {
+	text-decoration: underline;
+}
+
+/*************** Forms ***************/
+form label {
+	display: block;
+	padding: 10px 0 10px;
+	font-weight: bold;
+}
+
+form fieldset legend {
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+
+form p small {
+	font-size: 0.75em;
+	color: #777;
+}
+
+form input[type="text"], form input[type="password"], form select, form textarea,
+	form .wysiwyg {
+	padding: 6px;
+	font: 13px "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei",
+		sans-serif;
+	background: #fff url('../images/bg-form-field.gif') top left repeat-x;
+	border: 1px solid #d5d5d5;
+	color: #333;
+}
+
+form .small-input {
+	width: 25% !important;
+}
+
+form .medium-input {
+	width: 50% !important;
+}
+
+form .large-input {
+	width: 85% !important;
+	font-size: 16px !important;
+	padding: 8px !important;
+}
+
+form textarea {
+	width: 97.5% !important;
+}
+
+form select {
+	padding: 4px;
+	background: #fff;
+}
+
+form input[type="checkbox"], form input[type="radio"] {
+	padding: 0;
+	background: none;
+	border: 0;
+}
+
+.success {
+	background: url('../images/icons/tick_circle.png');
+}
+
+.error {
+	background: url('../images/icons/cross_circle.png');
+}
+
+.input-notification {
+	background-position: left 1px;
+	background-repeat: no-repeat;
+	padding-left: 22px;
+	margin-left: 5px;
+}

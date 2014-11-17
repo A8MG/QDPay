@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.ActionDao">
+	<resultMap type="com.a8.qdm.config.dao.bean.Action" id="action" />
+
+	<select id="queryActionCount" parameterType="Map" resultType="int">
+		select count(a.actionid) from actioninfo a, game_action ga, cp_game cg
+		where a.actionid = ga.actionid and ga.gameid = cg.gameid
+		<if test="gameId != ''">
+			and ga.gameid = #{gameId}
+		</if>
+		<if test="cpId != ''">
+			and cg.cpid = #{cpId}
+		</if>
+	</select>
+
+	<select id="queryActionList" parameterType="Map" resultMap="action">
+		select g.gamename, a.opentimes, a.confirmtimes,
+		concat(round(a.confirmtimes / a.opentimes * 100, 0), '%') payRate,
+		date_format(a.modifytime, '%Y-%m-%d %T') modifytime
+		from actioninfo a,
+		game_action ga, gameinfo g, cp_game cg
+		where a.actionid = ga.actionid
+		and ga.gameid = g.gameid and g.gameid = cg.gameid
+		<if test="gameId != ''">
+			and ga.gameid = #{gameId}
+		</if>
+		<if test="cpId != ''">
+			and cg.cpid = #{cpId}
+		</if>
+		order by a.modifytime desc
+		limit
+		#{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addAction" parameterType="String">
+		insert into actioninfo
+		(actionid,
+		opentimes, confirmtimes) values (#{actionId}, '0',
+		'0')
+	</insert>
+
+	<update id="updateOpenTimes" parameterType="String">
+		update actioninfo set
+		opentimes = (opentimes + 1)
+		where actionid = (select actionid from
+		game_action where gameid =
+		#{gameId})
+	</update>
+
+	<update id="updateConfigTimes" parameterType="String">
+		update actioninfo
+		set confirmtimes = (confirmtimes + 1)
+		where actionid = (select actionid
+		from game_action where gameid =
+		#{gameId})
+	</update>
+
+	<delete id="deleteAction" parameterType="String">
+		delete from actioninfo where actionid in
+		<foreach item="actionId" index="index" collection="array"
+			open="(" separator="," close=")">
+			#{actionId}
+		</foreach>
+	</delete>
+</mapper>

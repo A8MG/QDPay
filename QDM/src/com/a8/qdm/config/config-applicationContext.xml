@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+					http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+					http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="userDao" class="com.a8.qdm.config.dao.impl.UserDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="userService" class="com.a8.qdm.config.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id="userAction" class="com.a8.qdm.config.action.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="userAjax" class="com.a8.qdm.config.ajax.UserAjax">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="cpDao" class="com.a8.qdm.config.dao.impl.CpDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="cpService" class="com.a8.qdm.config.service.impl.CpServiceImpl">
+		<property name="cpDao" ref="cpDao"></property>
+	</bean>
+	<bean id="cpAction" class="com.a8.qdm.config.action.CpAction">
+		<property name="cpService" ref="cpService"></property>
+	</bean>
+	<bean id="cpAjax" class="com.a8.qdm.config.ajax.CpAjax">
+		<property name="cpGameService" ref="cpGameService"></property>
+		<property name="cpService" ref="cpService"></property>
+	</bean>
+
+	<bean id="cpGameDao" class="com.a8.qdm.config.dao.impl.CpGameDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="cpGameService" class="com.a8.qdm.config.service.impl.CpGameServiceImpl">
+		<property name="cpGameDao" ref="cpGameDao"></property>
+	</bean>
+
+	<bean id="gameDao" class="com.a8.qdm.config.dao.impl.GameDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="gameService" class="com.a8.qdm.config.service.impl.GameServiceImpl">
+		<property name="gameDao" ref="gameDao"></property>
+		<property name="actionDao" ref="actionDao"></property>
+		<property name="gameActionDao" ref="gameActionDao"></property>
+		<property name="cpGameDao" ref="cpGameDao"></property>
+		<property name="gamePayDao" ref="gamePayDao"></property>
+	</bean>
+	<bean id="gameAction" class="com.a8.qdm.config.action.GameAction">
+		<property name="gameService" ref="gameService"></property>
+		<property name="cpService" ref="cpService"></property>
+		<property name="payService" ref="payService"></property>
+		<property name="gamePayService" ref="gamePayService"></property>
+	</bean>
+	<bean id="gameAjax" class="com.a8.qdm.config.ajax.GameAjax">
+		<property name="payService" ref="payService"></property>
+		<property name="gameService" ref="gameService"></property>
+	</bean>
+
+	<bean id="gamePayDao" class="com.a8.qdm.config.dao.impl.GamePayDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="gamePayService" class="com.a8.qdm.config.service.impl.GamePayServiceImpl">
+		<property name="gamePayDao" ref="gamePayDao"></property>
+	</bean>
+
+	<bean id="simDao" class="com.a8.qdm.config.dao.impl.SimDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="simService" class="com.a8.qdm.config.service.impl.SimServiceImpl">
+		<property name="simDao" ref="simDao"></property>
+	</bean>
+	<bean id="simAction" class="com.a8.qdm.config.action.SimAction">
+		<property name="simService" ref="simService"></property>
+	</bean>
+
+	<bean id="actionDao" class="com.a8.qdm.config.dao.impl.ActionDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="actionService" class="com.a8.qdm.config.service.impl.ActionServiceImpl">
+		<property name="actionDao" ref="actionDao"></property>
+	</bean>
+
+	<bean id="gameActionDao" class="com.a8.qdm.config.dao.impl.GameActionDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+
+	<bean id="payDao" class="com.a8.qdm.config.dao.impl.PayDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="payService" class="com.a8.qdm.config.service.impl.PayServiceImpl">
+		<property name="payDao" ref="payDao"></property>
+	</bean>
+	<bean id="payAction" class="com.a8.qdm.config.action.PayAction">
+		<property name="payService" ref="payService"></property>
+	</bean>
+	<bean id="payAjax" class="com.a8.qdm.config.ajax.PayAjax">
+		<property name="payService" ref="payService"></property>
+		<property name="gamePayService" ref="gamePayService"></property>
+	</bean>
+</beans>

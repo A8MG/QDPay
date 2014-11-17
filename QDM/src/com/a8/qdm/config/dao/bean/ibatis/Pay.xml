@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.PayDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.Pay" id="parameterPay" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Pay" id="resultPay" />
+
+	<select id="queryAllPay" resultMap="resultPay">
+		select payid, payname from
+		payinfo order
+		by modifytime desc
+	</select>
+
+	<select id="queryPayById" parameterType="String" resultMap="resultPay">
+		select * from payinfo
+		where payid = #{payId}
+	</select>
+
+	<select id="queryPayCount" parameterMap="parameterPay"
+		resultType="int">
+		select count(payid) from payinfo where payid like
+		concat('%', #{payId}, '%')
+		and payname like concat('%', #{payName},
+		'%')
+	</select>
+
+	<select id="queryPayList" parameterType="Map" resultMap="resultPay">
+		select
+		payid, payname,
+		date_format(modifytime, '%Y-%m-%d %T')
+		modifytime from
+		payinfo where payid like concat('%', #{payId}, '%')
+		and payname like
+		concat('%', #{payName}, '%')
+		order by modifytime desc
+		limit
+		#{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addPay" parameterMap="parameterPay">
+		insert into payinfo (payid,
+		payname) values (#{payId}, #{payName})
+	</insert>
+
+	<update id="updatePay" parameterMap="parameterPay">
+		update payinfo set payname =
+		#{payName} where payid = #{payId}
+	</update>
+
+	<delete id="deletePay" parameterType="String">
+		delete from payinfo where payid in
+		<foreach item="payId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{payId}
+		</foreach>
+	</delete>
+</mapper>

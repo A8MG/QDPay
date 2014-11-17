@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<ThresholdFilter level="trace" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout charset="UTF-8"
+				pattern="%d{yyyy.MM.dd HH:mm:ss} %-5level %class{36} %L %M - %msg%xEx%n" />
+		</Console>
+		<RollingFile name="RollingFile"
+			fileName="../logs/QDPayLogs/${date:yyyy-MM-dd}.log"
+			filePattern="../logs/QDPayLogs/$${date:yyyy-MM}/%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout charset="UTF-8"
+				pattern="%d{yyyy.MM.dd HH:mm:ss} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<SizeBasedTriggeringPolicy size="20MB" />
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<root level="trace">
+			<appender-ref ref="RollingFile" />
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration>
