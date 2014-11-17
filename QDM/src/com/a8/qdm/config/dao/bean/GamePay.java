@@ -47,7 +47,9 @@ public class GamePay {
 		this.sortNo = sortNo;
 	}
 
+	@Override
 	public String toString() {
-		return gameId + "|" + payId;
+		return "GamePay [gameId=" + gameId + ", payId=" + payId + ", sortNo="
+				+ sortNo + "]";
 	}
 }

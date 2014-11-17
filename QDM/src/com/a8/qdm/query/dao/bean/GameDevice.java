@@ -34,7 +34,8 @@ public class GameDevice {
 		this.deviceId = deviceId;
 	}
 
+	@Override
 	public String toString() {
-		return gameId + "|" + deviceId;
+		return "GameDevice [gameId=" + gameId + ", deviceId=" + deviceId + "]";
 	}
 }

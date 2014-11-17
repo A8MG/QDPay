@@ -34,7 +34,8 @@ public class PayOrder {
 		this.orderNo = orderNo;
 	}
 
+	@Override
 	public String toString() {
-		return payId + "|" + orderNo;
+		return "PayOrder [payId=" + payId + ", orderNo=" + orderNo + "]";
 	}
 }

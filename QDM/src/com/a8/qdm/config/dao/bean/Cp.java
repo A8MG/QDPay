@@ -73,8 +73,10 @@ public class Cp {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
 	public String toString() {
-		return cpId + "|" + cpName + "|" + httpUrl + "|" + keyt + "|"
-				+ modifyTime;
+		return "Cp [cpId=" + cpId + ", cpName=" + cpName + ", httpUrl="
+				+ httpUrl + ", keyt=" + keyt + ", modifyTime=" + modifyTime
+				+ "]";
 	}
 }

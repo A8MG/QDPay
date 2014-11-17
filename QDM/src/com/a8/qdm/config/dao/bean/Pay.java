@@ -47,7 +47,9 @@ public class Pay {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
 	public String toString() {
-		return payId + "|" + payName + "|" + modifyTime;
+		return "Pay [payId=" + payId + ", payName=" + payName + ", modifyTime="
+				+ modifyTime + "]";
 	}
 }

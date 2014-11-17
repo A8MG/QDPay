@@ -168,9 +168,12 @@ public class Order {
 		this.endTime = endTime;
 	}
 
+	@Override
 	public String toString() {
-		return orderNo + "|" + prop + "|" + price + "|" + state + "|" + sms
-				+ "|" + reply + "|" + gameId + "|" + usernumber + "|" + linkid
-				+ "|" + modifyTime + "|" + startTime + "|" + endTime;
+		return "Order [orderNo=" + orderNo + ", prop=" + prop + ", price="
+				+ price + ", state=" + state + ", sms=" + sms + ", reply="
+				+ reply + ", gameId=" + gameId + ", usernumber=" + usernumber
+				+ ", linkid=" + linkid + ", modifyTime=" + modifyTime
+				+ ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
 }

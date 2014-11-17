@@ -47,7 +47,9 @@ public class Game {
 		this.chance = chance;
 	}
 
+	@Override
 	public String toString() {
-		return gameId + "|" + gameName + "|" + chance;
+		return "Game [gameId=" + gameId + ", gameName=" + gameName
+				+ ", chance=" + chance + "]";
 	}
 }

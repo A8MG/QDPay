@@ -73,8 +73,10 @@ public class Action {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
 	public String toString() {
-		return gameName + "|" + openTimes + "|" + confirmTimes + "|" + payRate
-				+ "|" + modifyTime;
+		return "Action [gameName=" + gameName + ", openTimes=" + openTimes
+				+ ", confirmTimes=" + confirmTimes + ", payRate=" + payRate
+				+ ", modifyTime=" + modifyTime + "]";
 	}
 }

@@ -86,8 +86,10 @@ public class Device {
 		this.sdkVersion = sdkVersion;
 	}
 
+	@Override
 	public String toString() {
-		return deviceId + "|" + "deviceType" + "|" + imei + "|" + imsi + "|"
-				+ systemVersion + "|" + sdkVersion;
+		return "Device [deviceId=" + deviceId + ", deviceType=" + deviceType
+				+ ", imei=" + imei + ", imsi=" + imsi + ", systemVersion="
+				+ systemVersion + ", sdkVersion=" + sdkVersion + "]";
 	}
 }

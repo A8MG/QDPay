@@ -34,7 +34,8 @@ public class GameAction {
 		this.actionId = actionId;
 	}
 
+	@Override
 	public String toString() {
-		return gameId + "|" + actionId;
+		return "GameAction [gameId=" + gameId + ", actionId=" + actionId + "]";
 	}
 }

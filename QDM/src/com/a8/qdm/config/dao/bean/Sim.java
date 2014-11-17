@@ -99,8 +99,11 @@ public class Sim {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
 	public String toString() {
-		return simId + "|" + simType + "|" + command + "|" + simServer + "|"
-				+ price + "|" + applyType + "|" + modifyTime;
+		return "Sim [simId=" + simId + ", simType=" + simType + ", command="
+				+ command + ", simServer=" + simServer + ", price=" + price
+				+ ", applyType=" + applyType + ", modifyTime=" + modifyTime
+				+ "]";
 	}
 }

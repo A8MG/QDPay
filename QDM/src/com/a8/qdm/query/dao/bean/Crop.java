@@ -60,10 +60,9 @@ public class Crop {
 		this.dayNo = dayNo;
 	}
 
-	/**
-	 * 重写toString方法
-	 */
+	@Override
 	public String toString() {
-		return cpName + "|" + gameName + "|" + price + "|" + dayNo;
+		return "Crop [cpName=" + cpName + ", gameName=" + gameName + ", price="
+				+ price + ", dayNo=" + dayNo + "]";
 	}
 }

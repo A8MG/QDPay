@@ -60,7 +60,10 @@ public class User {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
 	public String toString() {
-		return username + "|" + password + "|" + authority + "|" + modifyTime;
+		return "User [username=" + username + ", password=" + password
+				+ ", authority=" + authority + ", modifyTime=" + modifyTime
+				+ "]";
 	}
 }

@@ -37,7 +37,9 @@ public class DeviceServiceBean {
 		this.gameDevice = gameDevice;
 	}
 
+	@Override
 	public String toString() {
-		return device + "|" + gameDevice;
+		return "DeviceServiceBean [device=" + device + ", gameDevice="
+				+ gameDevice + "]";
 	}
 }

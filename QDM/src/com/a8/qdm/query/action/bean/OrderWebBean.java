@@ -125,12 +125,11 @@ public class OrderWebBean {
 		this.modifyTime = modifyTime;
 	}
 
-	/**
-	 * 重写toString方法
-	 */
+	@Override
 	public String toString() {
-		return orderNo + "|" + prop + "|" + price + "|" + state + "|" + sms
-				+ "|" + reply + "|" + gameName + "|" + payName + "|"
-				+ modifyTime;
+		return "OrderWebBean [orderNo=" + orderNo + ", prop=" + prop
+				+ ", price=" + price + ", state=" + state + ", sms=" + sms
+				+ ", reply=" + reply + ", gameName=" + gameName + ", payName="
+				+ payName + ", modifyTime=" + modifyTime + "]";
 	}
 }

@@ -34,7 +34,8 @@ public class CpGame {
 		this.gameId = gameId;
 	}
 
+	@Override
 	public String toString() {
-		return cpId + "|" + gameId;
+		return "CpGame [cpId=" + cpId + ", gameId=" + gameId + "]";
 	}
 }

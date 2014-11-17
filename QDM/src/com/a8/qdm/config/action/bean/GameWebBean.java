@@ -86,11 +86,10 @@ public class GameWebBean {
 		this.modifyTime = modifyTime;
 	}
 
-	/**
-	 * 重写toString
-	 */
+	@Override
 	public String toString() {
-		return gameId + "|" + gameName + "|" + chance + "|" + cpName + "|"
-				+ payName + "|" + modifyTime;
+		return "GameWebBean [gameId=" + gameId + ", gameName=" + gameName
+				+ ", chance=" + chance + ", cpName=" + cpName + ", payName="
+				+ payName + ", modifyTime=" + modifyTime + "]";
 	}
 }

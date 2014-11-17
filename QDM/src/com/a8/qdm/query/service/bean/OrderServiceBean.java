@@ -37,7 +37,9 @@ public class OrderServiceBean {
 		this.payOrder = payOrder;
 	}
 
+	@Override
 	public String toString() {
-		return order + "|" + payOrder;
+		return "OrderServiceBean [order=" + order + ", payOrder=" + payOrder
+				+ "]";
 	}
 }
