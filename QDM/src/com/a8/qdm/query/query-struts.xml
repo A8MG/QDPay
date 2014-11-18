@@ -26,5 +26,10 @@
 			method="query">
 			<result>/WEB-INF/page/action/actionlist.jsp</result>
 		</action>
+
+		<action name="queryActiveList" class="com.a8.qdm.query.action.ActiveAction"
+			method="query">
+			<result>/WEB-INF/page/active/activelist.jsp</result>
+		</action>
 	</package>
 </struts>

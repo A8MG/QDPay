@@ -20,6 +20,16 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
 
+	<bean id="activeDao" class="com.a8.qdm.query.dao.impl.ActiveDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="activeService" class="com.a8.qdm.query.service.impl.ActiveServiceImpl">
+		<property name="activeDao" ref="activeDao"></property>
+	</bean>
+	<bean id="activeAction" class="com.a8.qdm.query.action.ActiveAction">
+		<property name="activeService" ref="activeService"></property>
+	</bean>
+
 	<bean id="payOrderDao" class="com.a8.qdm.query.dao.impl.PayOrderDaoImpl">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>

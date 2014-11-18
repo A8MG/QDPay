@@ -9,6 +9,12 @@
 		<action name="deviceSyn" class="com.a8.qdm.sdk.action.SdkAction"
 			method="deviceSyn">
 		</action>
+		<action name="addActive" class="com.a8.qdm.sdk.action.SdkAction"
+			method="addActive">
+		</action>
+		<action name="updatePrepay" class="com.a8.qdm.sdk.action.SdkAction"
+			method="updatePrepay">
+		</action>
 		<action name="queryPay" class="com.a8.qdm.sdk.action.SdkAction"
 			method="queryPay">
 		</action>

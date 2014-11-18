@@ -17,6 +17,7 @@ import org.apache.struts2.ServletActionContext;
 import com.a8.qdm.config.service.GamePayService;
 import com.a8.qdm.query.dao.bean.Device;
 import com.a8.qdm.query.dao.bean.GameDevice;
+import com.a8.qdm.query.service.ActiveService;
 import com.a8.qdm.query.service.DeviceService;
 import com.a8.qdm.query.service.bean.DeviceServiceBean;
 import com.opensymphony.xwork2.ActionSupport;
@@ -53,6 +54,11 @@ public class SdkAction extends ActionSupport {
 	 * deviceService接口注入
 	 */
 	private DeviceService deviceService;
+
+	/**
+	 * activeService接口注入
+	 */
+	private ActiveService activeService;
 
 	/**
 	 * gamePayService接口注入
@@ -170,12 +176,38 @@ public class SdkAction extends ActionSupport {
 		return null;
 	}
 
+	/**
+	 * 添加活跃用户
+	 * 
+	 * @return
+	 */
+	public String addActive() {
+		return null;
+	}
+
+	/**
+	 * 修改用户付费意愿
+	 * 
+	 * @return
+	 */
+	public String updatePrepay() {
+		return null;
+	}
+
 	public DeviceService getDeviceService() {
 		return deviceService;
 	}
 
 	public void setDeviceService(DeviceService deviceService) {
 		this.deviceService = deviceService;
+	}
+
+	public ActiveService getActiveService() {
+		return activeService;
+	}
+
+	public void setActiveService(ActiveService activeService) {
+		this.activeService = activeService;
 	}
 
 	public GamePayService getGamePayService() {

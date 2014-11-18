@@ -10,6 +10,7 @@
 
 	<bean id="sdkAction" class="com.a8.qdm.sdk.action.SdkAction">
 		<property name="deviceService" ref="deviceService"></property>
+		<property name="activeService" ref="activeService"></property>
 		<property name="gamePayService" ref="gamePayService"></property>
 	</bean>
 
