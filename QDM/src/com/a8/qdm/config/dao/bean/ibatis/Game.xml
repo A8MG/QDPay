@@ -32,19 +32,17 @@
 		resultType="int">
 		select count(g.gameid)
 		from gameinfo g
-		,cp_game cg, cpinfo
-		c
-		where g.gameid =
-		cg.gameid and cg.cpid = c.cpid
-		and g.gameid like
-		concat('%',
-		#{gameId}, '%')
+		,cp_game cg, cpinfo c
+		where
+		g.gameid = cg.gameid and cg.cpid = c.cpid
+		<if test="gameId != ''">
+			and g.gameid = #{gameId}
+		</if>
 		and g.gamename like
-		concat('%', #{gameName},
-		'%')
+		concat(#{gameName}, '%')
 		and
-		c.cpname like concat('%', #{cpName},
-		'%')
+		c.cpname like
+		concat(#{cpName}, '%')
 	</select>
 
 	<select id="queryGameList" parameterType="Map" resultMap="resultGameWebBean">
@@ -54,22 +52,22 @@
 		date_format(g.modifytime,
 		'%Y-%m-%d %T')
 		modifytime from gameinfo g
-		,cp_game cg, cpinfo
-		c where
-		g.gameid =
-		cg.gameid and cg.cpid = c.cpid
-		and g.gameid like concat('%',
-		#{gameId},
-		'%')
+		,cp_game cg, cpinfo c
+		where g.gameid = cg.gameid
+		and cg.cpid = c.cpid
+		<if test="gameId != ''">
+			and g.gameid = #{gameId}
+		</if>
 		and g.gamename like
-		concat('%', #{gameName}, '%')
+		concat(#{gameName}, '%')
 		and
-		c.cpname like
-		concat('%', #{cpName},
-		'%')
+		c.cpname
+		like
+		concat(#{cpName}, '%')
 		order by g.modifytime desc
 		limit
-		#{startIndex}, #{pageSize}
+		#{startIndex},
+		#{pageSize}
 	</select>
 
 	<insert id="addGame" parameterMap="parameterGame">

@@ -12,17 +12,17 @@ public class Active {
 	 * 日期（天）
 	 */
 	private String dayTime;
-	
+
 	/**
 	 * 设备ID
 	 */
 	private String deviceId;
-	
+
 	/**
-	 * 支付意愿
+	 * 支付意愿金额
 	 */
-	private String prepay;
-	
+	private String price;
+
 	/**
 	 * 时间
 	 */
@@ -44,12 +44,12 @@ public class Active {
 		this.deviceId = deviceId;
 	}
 
-	public String getPrepay() {
-		return prepay;
+	public String getPrice() {
+		return price;
 	}
 
-	public void setPrepay(String prepay) {
-		this.prepay = prepay;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
 	public String getModifyTime() {
@@ -63,6 +63,6 @@ public class Active {
 	@Override
 	public String toString() {
 		return "Active [dayTime=" + dayTime + ", deviceId=" + deviceId
-				+ ", prepay=" + prepay + ", modifyTime=" + modifyTime + "]";
+				+ ", price=" + price + ", modifyTime=" + modifyTime + "]";
 	}
 }

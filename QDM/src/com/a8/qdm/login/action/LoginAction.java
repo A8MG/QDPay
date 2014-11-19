@@ -25,6 +25,11 @@ public class LoginAction extends ActionSupport {
 	private static final String ADMIN = "0";
 
 	/**
+	 * 合作方
+	 */
+	private static final String CP = "1";
+
+	/**
 	 * 日志
 	 */
 	private static Logger log = LogManager.getLogger(LoginAction.class);
@@ -67,14 +72,23 @@ public class LoginAction extends ActionSupport {
 				log.info("用户名和密码正确");
 				String authority = userInfo.getAuthority();
 				String cpId = "";
+				String channelId = "";
 				if (ADMIN.equals(authority)) {
 					log.info("用户" + username + "的权限为管理员");
 				} else {
-					log.info("用户" + username + "的权限为合作方");
-					cpId = authority;
+					String authType = authority.split("[|]")[0];
+					String authId = authority.split("[|]")[1];
+					if (CP.equals(authType)) {
+						log.info("用户" + username + "的权限为合作方");
+						cpId = authId;
+					} else {
+						log.info("用户" + username + "的权限为渠道方");
+						channelId = authId;
+					}
 				}
 				session.put("user", userInfo);
 				session.put("cpId", cpId);
+				session.put("channelId", channelId);
 
 				isExist = true;
 			} else {

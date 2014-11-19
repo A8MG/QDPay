@@ -22,14 +22,14 @@
 	<select id="querySimCount" parameterMap="parameterSim"
 		resultType="int">
 		select count(simid) from siminfo where
-		<if test="simType != ''">
-			simtype = #{simType} and
-		</if>
-		command like concat('%',
-		#{command},
+		simtype like concat(#{simType},
 		'%')
-		and price like concat('%',
-		#{price}, '%')
+		<if test="command != ''">
+			and command = #{command}
+		</if>
+		<if test="price != ''">
+			and price = #{price}
+		</if>
 	</select>
 
 	<select id="querySimList" parameterType="Map" resultMap="resultSim">
@@ -38,13 +38,13 @@
 		simserver, price, applytype,
 		date_format(modifytime, '%Y-%m-%d %T')
 		modifytime from siminfo where
-		<if test="simType != ''">
-			simtype = #{simType} and
+		simtype like concat(#{simType}, '%')
+		<if test="command != ''">
+			and command = #{command}
 		</if>
-		command like concat('%',
-		#{command}, '%')
-		and price like concat('%',
-		#{price}, '%')
+		<if test="price != ''">
+			and price = #{price}
+		</if>
 		order by
 		modifytime desc
 		limit #{startIndex}, #{pageSize}

@@ -94,12 +94,11 @@
 		po.payid = p.payid and o.gameid = g.gameid and
 		g.gameid = cg.gameid
 		<if test="cpId != ''">
-			and cg.cpid = #{cpId} and o.reply != '2'
+			and cg.cpid = #{cpId} and o.reply &lt; 2
 		</if>
-		and
-		o.orderno
-		like
-		concat('%', #{orderNo}, '%')
+		<if test="orderNo != ''">
+			and o.orderno = #{orderNo}
+		</if>
 		<if test="gameId != ''">
 			and o.gameid = #{gameId}
 		</if>
@@ -120,12 +119,11 @@
 		from orderinfo o, cp_game cg where o.gameid =
 		cg.gameid
 		<if test="cpId != ''">
-			and cg.cpid = #{cpId} and o.reply != '2'
+			and cg.cpid = #{cpId} and o.reply &lt; 2
 		</if>
-		and o.orderno
-		like
-		concat('%',
-		#{orderNo}, '%')
+		<if test="orderNo != ''">
+			and o.orderno = #{orderNo}
+		</if>
 		<if test="gameId != ''">
 			and o.gameid = #{gameId}
 		</if>

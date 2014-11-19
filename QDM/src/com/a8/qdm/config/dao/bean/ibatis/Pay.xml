@@ -18,23 +18,29 @@
 
 	<select id="queryPayCount" parameterMap="parameterPay"
 		resultType="int">
-		select count(payid) from payinfo where payid like
-		concat('%', #{payId}, '%')
-		and payname like concat('%', #{payName},
-		'%')
+		select count(payid) from payinfo where
+		<if test="payId != ''">
+			payid = #{payId} and
+		</if>
+		payname like concat(#{payName}, '%')
 	</select>
 
 	<select id="queryPayList" parameterType="Map" resultMap="resultPay">
 		select
 		payid, payname,
 		date_format(modifytime, '%Y-%m-%d %T')
-		modifytime from
-		payinfo where payid like concat('%', #{payId}, '%')
-		and payname like
-		concat('%', #{payName}, '%')
+		modifytime
+		from
+		payinfo where
+		<if test="payId != ''">
+			payid = #{payId} and
+		</if>
+		payname like
+		concat(#{payName}, '%')
 		order by modifytime desc
 		limit
-		#{startIndex}, #{pageSize}
+		#{startIndex},
+		#{pageSize}
 	</select>
 
 	<insert id="addPay" parameterMap="parameterPay">

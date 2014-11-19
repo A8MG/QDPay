@@ -38,6 +38,16 @@ public class Device {
 	 */
 	private String sdkVersion;
 
+	/**
+	 * 渠道ID
+	 */
+	private String channelId;
+
+	/**
+	 * 时间
+	 */
+	private String modifyTime;
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -86,10 +96,27 @@ public class Device {
 		this.sdkVersion = sdkVersion;
 	}
 
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
+	}
+
+	public String getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(String modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Device [deviceId=" + deviceId + ", deviceType=" + deviceType
 				+ ", imei=" + imei + ", imsi=" + imsi + ", systemVersion="
-				+ systemVersion + ", sdkVersion=" + sdkVersion + "]";
+				+ systemVersion + ", sdkVersion=" + sdkVersion + ", channelId="
+				+ channelId + ", modifyTime=" + modifyTime + "]";
 	}
 }

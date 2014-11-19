@@ -19,8 +19,11 @@
 	</select>
 
 	<select id="queryCpCount" parameterMap="parameterCp" resultType="int">
-		select count(cpid) from cpinfo where cpid like concat('%', #{cpId},
-		'%') and cpname like concat('%', #{cpName}, '%')
+		select count(cpid) from cpinfo where
+		<if test="cpId != ''">
+			cpid = #{cpId} and
+		</if>
+		cpname like concat(#{cpName}, '%')
 	</select>
 
 	<select id="queryCpList" parameterType="Map" resultMap="resultCp">
@@ -28,9 +31,11 @@
 		cpid, cpname, httpurl,
 		keyt, date_format(modifytime, '%Y-%m-%d
 		%T')
-		modifytime from cpinfo where cpid like concat('%', #{cpId}, '%')
-		and
-		cpname like concat('%', #{cpName}, '%')
+		modifytime from cpinfo where
+		<if test="cpId != ''">
+			cpid = #{cpId} and
+		</if>
+		cpname like concat(#{cpName}, '%')
 		order by modifytime desc
 		limit
 		#{startIndex}, #{pageSize}

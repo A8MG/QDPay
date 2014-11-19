@@ -19,16 +19,18 @@
 	</select>
 
 	<select id="queryUserCount" parameterType="String" resultType="int">
-		select count(username) from userinfo where username like concat('%',
-		#{username}, '%')
+		select count(username) from userinfo where username like
+		concat(#{username}, '%')
 	</select>
 
 	<select id="queryUserList" parameterType="Map" resultMap="resultUser">
-		select u.username, u.password, c.cpname authority, date_format(u.modifytime,
+		select
+		u.username, u.password, c.cpname authority, date_format(u.modifytime,
 		'%Y-%m-%d %T') modifytime
-		from userinfo u left join cpinfo c on u.authority = c.cpid where u.username like
-		concat('%',
-		#{username}, '%') order by u.modifytime desc limit #{startIndex},
+		from userinfo u left join cpinfo c on
+		u.authority = c.cpid where u.username like
+		concat(#{username}, '%')
+		order by u.modifytime desc limit #{startIndex},
 		#{pageSize}
 	</select>
 
