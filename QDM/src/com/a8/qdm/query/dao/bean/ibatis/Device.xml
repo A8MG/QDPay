@@ -11,10 +11,11 @@
 	<insert id="addDevice" parameterMap="device">
 		insert into deviceinfo
 		(deviceid, devicetype, imei, imsi, sdkversion,
-		systemversion)
+		systemversion,
+		channelid)
 		values
 		(#{deviceId}, #{deviceType}, #{imei}, #{imsi},
 		#{sdkVersion},
-		#{systemVersion})
+		#{systemVersion}, #{channelId})
 	</insert>
 </mapper>

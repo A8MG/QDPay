@@ -88,6 +88,7 @@ public class SdkAction extends ActionSupport {
 		device.setImsi(request.getParameter("imsi"));
 		device.setSdkVersion(request.getParameter("sdkVersion"));
 		device.setSystemVersion(request.getParameter("systemVersion"));
+		device.setChannelId(request.getParameter("channelId"));
 		log.info("设备信息：" + device);
 		gameDevice.setGameId(request.getParameter("gameId"));
 		gameDevice.setDeviceId(request.getParameter("deviceId"));
@@ -96,10 +97,17 @@ public class SdkAction extends ActionSupport {
 
 		// 添加设备信息
 		try {
-			deviceService.addDevice(deviceServiceBean);
+			if (device.getChannelId() != null
+					&& "".equals(device.getChannelId())) {
+				deviceService.addDevice(deviceServiceBean);
 
-			// 返回给SDK请求状态1：成功
-			jsonObject.put("state", SDK_SUCCESS);
+				// 返回给SDK请求状态1：成功
+				jsonObject.put("state", SDK_SUCCESS);
+			} else {
+
+				// 返回给SDK请求状态0：失败
+				jsonObject.put("state", SDK_FAIL);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
