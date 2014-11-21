@@ -20,6 +20,6 @@
 		and d.deviceid = gd.deviceid and gd.gameid = #{gameId} and d.channelid = #{channelId} 
 		and a.price > 0 and a.daytime = date_sub(#{dayTime}, interval 1 day)) p,
 		(select d.deviceid from deviceinfo d, game_device gd where d.deviceid = gd.deviceid 
-		and gd.gameid = #{gameId} and d.channelid = #{channelId} and d.modifytime &lt; #{dayTime}) t;
+		and gd.gameid = #{gameId} and d.channelid = #{channelId} and d.modifytime &lt; #{dayTime}) t
 	</select>
 </mapper>
