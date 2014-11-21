@@ -98,7 +98,7 @@ public class SdkAction extends ActionSupport {
 		// 添加设备信息
 		try {
 			if (device.getChannelId() != null
-					&& "".equals(device.getChannelId())) {
+					&& !"".equals(device.getChannelId())) {
 				deviceService.addDevice(deviceServiceBean);
 
 				// 返回给SDK请求状态1：成功
