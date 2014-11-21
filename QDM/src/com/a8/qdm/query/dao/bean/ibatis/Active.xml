@@ -2,5 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <mapper namespace="com.a8.qdm.query.dao.ActiveDao">
-
+ <parameterMap type="com.a8.qdm.query.dao.bean.Active" id="active"/>
+ <insert id="addLoginActive" parameterMap="active">
+    insert into activeinfo
+    (dayTime,deviceId,price)
+    values
+    (#(dayTime),#(deviceId),#(price))
+ </insert>
 </mapper>
