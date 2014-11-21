@@ -48,11 +48,15 @@
 		sum(o.price) price, date_format(o.modifytime, '%d') dayNo
 		from
 		orderinfo o, cpinfo c, cp_game cg
-		where c.cpid = cg.cpid and cg.gameid
-		= o.gameid and state = '1'
-		and date_format(o.modifytime, '%Y%m') =
-		date_format(now(), '%Y%m') - 1
-		group by c.cpname,
+		where
+		c.cpid = cg.cpid and cg.gameid =
+		o.gameid and state = '1'
+		and
+		date_format(o.modifytime, '%Y-%m') =
+		date_format(date_sub(curdate(),
+		interval 1 month), '%Y-%m')
+		group by
+		c.cpname,
 		date_format(o.modifytime, '%Y%m%d');
 	</select>
 
@@ -64,18 +68,13 @@
 		orderinfo o, gameinfo g,
 		cp_game cg
 		where
-		o.gameid = g.gameid and g.gameid = cg.gameid and
-		cg.cpid = #{cpId} and
-		o.state =
-		'1' and o.reply != '2'
+		o.gameid = g.gameid and g.gameid = cg.gameid
+		and cg.cpid
+		= #{cpId} and o.state = '1' and o.reply != '2'
 		and
-		date_format(o.modifytime,
-		'%Y%m') =
-		date_format(now(),
-		'%Y%m') -
-		1
-		group by
-		g.gamename,
+		date_format(o.modifytime, '%Y-%m') = date_format(date_sub(curdate(),
+		interval 1 month), '%Y-%m')
+		group by g.gamename,
 		date_format(o.modifytime, '%Y%m%d');
 	</select>
 
@@ -87,11 +86,13 @@
 		o.modifytime
 		from
 		orderinfo o,
-		pay_order po, payinfo p, gameinfo g, cp_game cg where
+		pay_order po, payinfo p,
+		gameinfo g, cp_game cg where
 		o.orderno =
 		po.orderno
 		and
-		po.payid = p.payid and o.gameid = g.gameid and
+		po.payid = p.payid
+		and o.gameid = g.gameid and
 		g.gameid = cg.gameid
 		<if test="cpId != ''">
 			and cg.cpid = #{cpId} and o.reply &lt; 2
