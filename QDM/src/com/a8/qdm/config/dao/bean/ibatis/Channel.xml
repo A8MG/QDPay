@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.ChannelDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.Channel"
+		id="parameterChannel" />
+	<resultMap type="com.a8.qdm.config.dao.bean.Channel" id="resultChannel" />
+
+
+	<select id="queryAllChannel" resultMap="resultChannel">
+		select channelid,
+		channelname from channelinfo order by modifytime desc
+	</select>
+
+	<select id="queryChannelById" parameterType="String" resultMap="resultChannel">
+		select channelid, channelname from channelinfo where channelid =
+		#{channelId}
+	</select>
+
+	<select id="queryChannelCount" parameterMap="parameterChannel"
+		resultType="int">
+		select count(channelid) from channelinfo where
+		<if test="channelId != ''">
+			channelid = #{channelId} and
+		</if>
+		channelname like concat(#{channelName}, '%')
+	</select>
+
+	<select id="queryChannelList" parameterType="Map" resultMap="resultChannel">
+		select channelid, channelname, date_format(modifytime, '%Y-%m-%d %T')
+		modifytime from channelinfo where
+		<if test="channelId != ''">
+			channelid = #{channelId} and
+		</if>
+		channelname like concat(#{channelName}, '%')
+		order by modifytime desc
+		limit
+		#{startIndex}, #{pageSize}
+	</select>
+
+	<insert id="addChannel" parameterMap="parameterChannel">
+		insert into channelinfo
+		(channelid, channelname) values (#{channelId}, #{channelName})
+	</insert>
+
+	<update id="updateChannel" parameterMap="parameterChannel">
+		update channelinfo set
+		channelname = #{channelName} where channelid = #{channelId}
+	</update>
+
+	<delete id="deleteChannel" parameterType="String">
+		delete from channelinfo where channelid in
+		<foreach item="channelId" index="index" collection="array"
+			open="(" separator="," close=")">
+			#{channelId}
+		</foreach>
+	</delete>
+</mapper>
