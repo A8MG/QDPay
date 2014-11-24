@@ -4,6 +4,27 @@
 <mapper namespace="com.a8.qdm.query.dao.ActiveDao">
 	<parameterMap type="com.a8.qdm.query.dao.bean.Active" id="active" />
 	<resultMap type="com.a8.qdm.query.dao.bean.Active" id="resultActive" />
+	<resultMap type="com.a8.qdm.query.action.bean.ActiveWebBean" id="resultActiveWebBean" />
+	
+	<select id="queryActiveNo" parameterType="Map" resultMap="resultActiveWebBean">
+		select count(a.deviceid) addNo, count(d.deviceid) dayActiveNo, count(w.deviceid) weekActiveNo, 
+		count(p.deviceid) prePayNo, (count(t.deviceid) - count(w.deviceid)) loseNo from
+		(select d.deviceid from deviceinfo d, game_device gd where d.deviceid = gd.deviceid 
+		and gd.gameid = #{gameId} and d.channelid = #{channelId} 
+		and date_format(d.modifytime, '%Y-%m-%d') = date_sub(#{dayTime}, interval 1 day)) a,
+		(select a.deviceid from activeinfo a, deviceinfo d, game_device gd where a.deviceid = d.deviceid 
+		and d.deviceid = gd.deviceid and gd.gameid = #{gameId} and d.channelid = #{channelId} 
+		and a.daytime = date_sub(#{dayTime}, interval 1 day)) d,
+		(select distinct a.deviceid from activeinfo a, deviceinfo d, game_device gd where a.deviceid = d.deviceid 
+		and d.deviceid = gd.deviceid and gd.gameid = #{gameId} and d.channelid = #{channelId} 
+		and a.daytime between date_sub(#{dayTime}, interval 8 day) and #{dayTime}) w,
+		(select a.deviceid from activeinfo a, deviceinfo d, game_device gd where a.deviceid = d.deviceid 
+		and d.deviceid = gd.deviceid and gd.gameid = #{gameId} and d.channelid = #{channelId} 
+		and a.price > 0 and a.daytime = date_sub(#{dayTime}, interval 1 day)) p,
+		(select d.deviceid from deviceinfo d, game_device gd where d.deviceid = gd.deviceid 
+		and gd.gameid = #{gameId} and d.channelid = #{channelId} and d.modifytime &lt; #{dayTime}) t
+	</select>
+	
 	<insert id="addLoginActive" parameterMap="active">
 		insert into activeinfo
 		(dayTime,deviceId,price)
