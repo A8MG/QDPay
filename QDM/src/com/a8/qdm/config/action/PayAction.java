@@ -66,22 +66,18 @@ public class PayAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------queryPayList start---------------");
-		try {
-			if (search == null) {
-				search = new Pay();
-				search.setPayId("");
-				search.setPayName("");
-			}
-			log.info("查询条件：" + search);
-			page.setTotalCount(payService.queryPayCount(search));
-			page.setPageCount();
-			page.setStartIndex();
-			log.info("分页：" + page);
-			payList = payService.queryPayList(search, page);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+		
+		if (search == null) {
+			search = new Pay();
+			search.setPayId("");
+			search.setPayName("");
 		}
+		log.info("查询条件：" + search);
+		page.setTotalCount(payService.queryPayCount(search));
+		page.setPageCount();
+		page.setStartIndex();
+		log.info("分页：" + page);
+		payList = payService.queryPayList(search, page);
 
 		// 出口日志
 		log.info("---------------queryPayList end---------------");

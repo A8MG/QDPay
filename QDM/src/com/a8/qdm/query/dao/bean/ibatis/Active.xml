@@ -42,4 +42,5 @@
 		#{dayTime} and deviceId =
 		#{deviceId}
 	</update>
+
 </mapper>

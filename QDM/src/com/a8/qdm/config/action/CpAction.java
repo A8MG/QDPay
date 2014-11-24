@@ -67,22 +67,18 @@ public class CpAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------queryCpList start---------------");
-		try {
-			if (search == null) {
-				search = new Cp();
-				search.setCpId("");
-				search.setCpName("");
-			}
-			log.info("查询条件：" + search);
-			page.setTotalCount(cpService.queryCpCount(search));
-			page.setPageCount();
-			page.setStartIndex();
-			log.info("分页：" + page);
-			cpList = cpService.queryCpList(search, page);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+		
+		if (search == null) {
+			search = new Cp();
+			search.setCpId("");
+			search.setCpName("");
 		}
+		log.info("查询条件：" + search);
+		page.setTotalCount(cpService.queryCpCount(search));
+		page.setPageCount();
+		page.setStartIndex();
+		log.info("分页：" + page);
+		cpList = cpService.queryCpList(search, page);
 
 		// 出口日志
 		log.info("---------------queryCpList end---------------");

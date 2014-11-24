@@ -131,23 +131,18 @@ public class GameAction extends InitAction {
 		// 入口日志
 		log.info("---------------queryGameList start---------------");
 
-		try {
-			if (search == null) {
-				search = new GameWebBean();
-				search.setGameId("");
-				search.setGameName("");
-				search.setCpName("");
-			}
-			log.info("查询条件：" + search);
-			page.setTotalCount(gameService.queryGameCount(search));
-			page.setPageCount();
-			page.setStartIndex();
-			log.info("分页：" + page);
-			gameWebBeanList = gameService.queryGameList(search, page);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+		if (search == null) {
+			search = new GameWebBean();
+			search.setGameId("");
+			search.setGameName("");
+			search.setCpName("");
 		}
+		log.info("查询条件：" + search);
+		page.setTotalCount(gameService.queryGameCount(search));
+		page.setPageCount();
+		page.setStartIndex();
+		log.info("分页：" + page);
+		gameWebBeanList = gameService.queryGameList(search, page);
 
 		// 出口日志
 		log.info("---------------queryGameList end---------------");
