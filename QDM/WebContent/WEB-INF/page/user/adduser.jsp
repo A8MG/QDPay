@@ -15,9 +15,18 @@
 			if ($(this).val() == 0) {
 				$("#cp").hide();
 				$("#cpId").attr("disabled", "disabled");
-			} else {
+				$("#channel").hide();
+				$("#channelId").attr("disabled", "disabled");
+			} else if ($(this).val() == 1) {
+				$("#channel").hide();
+				$("#channelId").attr("disabled", "disabled");
 				$("#cp").show();
 				$("#cpId").removeAttr("disabled");
+			} else {
+				$("#cp").hide();
+				$("#cpId").attr("disabled", "disabled");
+				$("#channel").show();
+				$("#channelId").removeAttr("disabled");
 			}
 		});
 	});
@@ -40,9 +49,15 @@
 							onfocus="removeTip('confirmPassword')"
 							onblur="checkPasswordSame('confirmPassword', 'password')" /> <label>权限</label>
 						<select id="authority" name="user.authority">
+							<option value="2">渠道</option>
 							<option value="1">合作方</option>
 							<option value="0">管理员</option>
 						</select>
+						<div id="channel">
+							<label>渠道</label>
+							<s:select id="channelId" name="channelId" list="channelList"
+								listKey="channelId" listValue="channelName" theme="simple" />
+						</div>
 						<div id="cp">
 							<label>合作方</label>
 							<s:select id="cpId" name="cpId" list="cpList" listKey="cpId"

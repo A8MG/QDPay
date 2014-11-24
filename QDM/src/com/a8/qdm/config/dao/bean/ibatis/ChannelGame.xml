@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.a8.qdm.config.dao.ChannelGameDao">
+	<parameterMap type="com.a8.qdm.config.dao.bean.ChannelGame"
+		id="parameterChannelGame" />
+	<resultMap type="com.a8.qdm.config.dao.bean.ChannelGame" id="resultChannelGame" />
+
+	<select id="queryChannelGameList" parameterType="String"
+		resultMap="resultChannelGame">
+		select channelid, gameid from channel_game where channelid in
+		<foreach item="channelId" index="index" collection="array"
+			open="(" separator="," close=")">
+			#{channelId}
+		</foreach>
+	</select>
+
+	<insert id="addChannelGame" parameterMap="parameterChannelGame">
+		insert into
+		channel_game (channelid,
+		gameid) values (#{channelId}, #{gameId})
+	</insert>
+
+	<delete id="deleteChannelGame" parameterType="String">
+		delete from channel_game where gameid in
+		<foreach item="gameId" index="index" collection="array" open="("
+			separator="," close=")">
+			#{gameId}
+		</foreach>
+	</delete>
+</mapper>

@@ -1,7 +1,9 @@
 package com.a8.qdm.sdk.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.a8.qdm.config.service.GamePayService;
+import com.a8.qdm.query.dao.bean.Active;
 import com.a8.qdm.query.dao.bean.Device;
 import com.a8.qdm.query.dao.bean.GameDevice;
 import com.a8.qdm.query.service.ActiveService;
@@ -190,6 +193,40 @@ public class SdkAction extends ActionSupport {
 	 * @return
 	 */
 	public String addActive() {
+
+		log.info("---------------addActive start---------------");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		String deviceId = request.getParameter("deviceId");
+		log.info("---------sdk传入deviceId--------" + deviceId);
+		JSONObject obj = new JSONObject();
+		Active active = new Active();
+		Date date = new Date();
+		SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+		active.setDeviceId(deviceId);
+		active.setPrice("0");
+		log.info("------------------date---------------"+formate.format(date));
+		active.setDayTime(formate.format(date));
+		try {
+			activeService.addLoginActive(active);
+			obj.put("state", SDK_SUCCESS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			obj.put("state", SDK_FAIL);
+			e.printStackTrace();
+		} finally {
+
+			try {
+				response.getWriter().print(obj);
+				log.info("发送给轻点支付SDK内容：" + obj);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log.info(e.getMessage());
+			}
+
+		}
+		log.info("---------------addActive end---------------");
 		return null;
 	}
 
@@ -199,6 +236,39 @@ public class SdkAction extends ActionSupport {
 	 * @return
 	 */
 	public String updatePrepay() {
+
+		log.info("---------------updatePrepay start---------------");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		String deviceId = request.getParameter("deviceId");
+		String price = request.getParameter("price");
+		JSONObject obj = new JSONObject();
+		Active active = new Active();
+		active.setDeviceId(deviceId);
+		active.setPrice(price);
+		Date date = new Date();
+		SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+		active.setDayTime(formate.format(date));
+		try {
+			activeService.updatePrepay(active);
+			obj.put("state", SDK_SUCCESS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			obj.put("state", SDK_FAIL);
+		} finally {
+
+			try {
+				response.getWriter().print(obj);
+				log.info("发送给轻点支付SDK内容：" + obj);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log.info(e.getMessage());
+			}
+		}
+
+		log.info("---------------updatePrepay end---------------");
 		return null;
 	}
 

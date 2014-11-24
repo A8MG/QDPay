@@ -64,6 +64,36 @@
 			method="checkCpId">
 		</action>
 
+		<action name="queryChannelList" class="com.a8.qdm.config.action.ChannelAction"
+			method="query">
+			<result>/WEB-INF/page/channel/channellist.jsp</result>
+		</action>
+		<action name="toAddChannel">
+			<result>/WEB-INF/page/channel/addchannel.jsp</result>
+		</action>
+		<action name="addChannel" class="com.a8.qdm.config.action.ChannelAction"
+			method="addChannel">
+			<result type="redirectAction">queryChannelList</result>
+		</action>
+		<action name="toUpdateChannel" class="com.a8.qdm.config.action.ChannelAction"
+			method="toUpdateChannel">
+			<result>/WEB-INF/page/channel/updatechannel.jsp</result>
+		</action>
+		<action name="updateChannel" class="com.a8.qdm.config.action.ChannelAction"
+			method="updateChannel">
+			<result type="redirectAction">queryChannelList</result>
+		</action>
+		<action name="deleteChannel" class="com.a8.qdm.config.action.ChannelAction"
+			method="deleteChannel">
+			<result type="redirectAction">queryChannelList</result>
+		</action>
+		<action name="channelBindGame" class="com.a8.qdm.config.ajax.ChannelAjax"
+			method="channelBindGame">
+		</action>
+		<action name="checkChannelId" class="com.a8.qdm.config.ajax.ChannelAjax"
+			method="checkChannelId">
+		</action>
+
 		<action name="queryGameList" class="com.a8.qdm.config.action.GameAction"
 			method="query">
 			<result>/WEB-INF/page/game/gamelist.jsp</result>
