@@ -66,22 +66,18 @@ public class SimAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------querySimList start---------------");
-		try {
-			if (search == null) {
-				search = new Sim();
-				search.setSimType("");
-				search.setCommand("");
-				search.setPrice("");
-			}
-			log.info("查询条件：" + search);
-			page.setTotalCount(simService.querySimCount(search));
-			page.setPageCount();
-			page.setStartIndex();
-			simList = simService.querySimList(search, page);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+		
+		if (search == null) {
+			search = new Sim();
+			search.setSimType("");
+			search.setCommand("");
+			search.setPrice("");
 		}
+		log.info("查询条件：" + search);
+		page.setTotalCount(simService.querySimCount(search));
+		page.setPageCount();
+		page.setStartIndex();
+		simList = simService.querySimList(search, page);
 
 		// 出口日志
 		log.info("---------------querySimList end---------------");

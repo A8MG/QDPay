@@ -83,18 +83,13 @@ public class UserAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------queryUserList start---------------");
-
-		try {
-			log.info("查询条件：" + search);
-			page.setTotalCount(userService.queryUserCount(search));
-			page.setPageCount();
-			page.setStartIndex();
-			log.info("分页：" + page);
-			userList = userService.queryUserList(search, page);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
-		}
+		
+		log.info("查询条件：" + search);
+		page.setTotalCount(userService.queryUserCount(search));
+		page.setPageCount();
+		page.setStartIndex();
+		log.info("分页：" + page);
+		userList = userService.queryUserList(search, page);
 
 		// 出口日志
 		log.info("---------------queryUserList end---------------");
