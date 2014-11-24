@@ -24,6 +24,7 @@
 					<li><a class="nav-top-item">运营管理</a>
 						<ul>
 							<li><a href="queryUserList" target="iframepage">用户</a></li>
+							<li><a href="queryChannelList" target="iframepage">渠道</a></li>
 							<li><a href="queryCpList" target="iframepage">合作方</a></li>
 							<li><a href="queryGameList" target="iframepage">产品</a></li>
 							<li><a href="querySimList" target="iframepage">短信指令</a></li>

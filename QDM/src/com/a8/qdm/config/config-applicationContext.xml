@@ -42,6 +42,27 @@
 		<property name="cpGameDao" ref="cpGameDao"></property>
 	</bean>
 
+	<bean id="channelDao" class="com.a8.qdm.config.dao.impl.ChannelDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="channelService" class="com.a8.qdm.config.service.impl.ChannelServiceImpl">
+		<property name="channelDao" ref="channelDao"></property>
+	</bean>
+	<bean id="channelAction" class="com.a8.qdm.config.action.ChannelAction">
+		<property name="channelService" ref="channelService"></property>
+	</bean>
+	<bean id="channelAjax" class="com.a8.qdm.config.ajax.ChannelAjax">
+		<property name="channelGameService" ref="channelGameService"></property>
+		<property name="channelService" ref="channelService"></property>
+	</bean>
+
+	<bean id="channelGameDao" class="com.a8.qdm.config.dao.impl.ChannelGameDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<bean id="channelGameService" class="com.a8.qdm.config.service.impl.ChannelGameServiceImpl">
+		<property name="channelGameDao" ref="channelGameDao"></property>
+	</bean>
+
 	<bean id="gameDao" class="com.a8.qdm.config.dao.impl.GameDaoImpl">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
