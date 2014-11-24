@@ -2,11 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <mapper namespace="com.a8.qdm.query.dao.ActiveDao">
- <parameterMap type="com.a8.qdm.query.dao.bean.Active" id="active"/>
- <insert id="addLoginActive" parameterMap="active">
-    insert into activeinfo
-    (dayTime,deviceId,price)
-    values
-    (#(dayTime),#(deviceId),#(price))
- </insert>
+	<parameterMap type="com.a8.qdm.query.dao.bean.Active" id="active" />
+	<resultMap type="com.a8.qdm.query.dao.bean.Active" id="resultActive" />
+	<insert id="addLoginActive" parameterMap="active">
+		insert into activeinfo
+		(dayTime,deviceId,price)
+		values
+		(CURDATE(),#{deviceId},#{price})
+	</insert>
+	<select id="selectActive" parameterMap="active" resultMap="resultActive">
+		select * from activeinfo where daytime = #{dayTime} and
+		deviceId =
+		#{deviceId}
+	</select>
+	<update id="updatePrepay" parameterMap="active">
+		update activeinfo set
+		price = price + #{price} where daytime =
+		#{dayTime} and deviceId =
+		#{deviceId}
+	</update>
 </mapper>
