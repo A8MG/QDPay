@@ -52,15 +52,17 @@
 							list="{'100%', '98%', '96%', '94%', '92%', '90%'}" theme="simple" />
 						<label>合作方</label> <input type="text" id="cpName"
 							value="${gameWebBean.cpName}" readonly="readonly" /> <label>渠道</label>
-						<s:checkboxlist id="channelId" name="channelIdList"
-							list="channelList" listKey="channelId" listValue="channelName"
-							theme="simple" />
+						<div class="checkbox">
+							<s:checkboxlist id="channelId" name="channelIdList"
+								list="channelList" listKey="channelId" listValue="channelName"
+								theme="simple" />
+						</div>
 						<label>首选支付方式</label>
 						<s:select id="firstPay" name="firstPayId" list="payList"
 							listKey="payId" listValue="payName" onchange="getOtherPay()"
 							theme="simple" />
 						<label>其它支付方式</label>
-						<div id="otherPay"></div>
+						<div id="otherPay" class="checkbox"></div>
 						<div class="clear"></div>
 						<input type="submit" value="提交" /> <a class="button button-space"
 							href="queryGameList">返回</a>

@@ -21,8 +21,8 @@
 							onblur="checkExist('cpId', 'checkCpId')" /> <label>合作方名称</label>
 						<input type="text" id="cpName" name="cp.cpName"
 							onfocus="removeTip('cpName')" onblur="checkRequired('cpName')" />
-						<label>请求地址</label> <input type="text" id="httpUrl"
-							name="cp.httpUrl" />
+						<label>请求地址</label>
+						<textarea id="httpUrl" name="cp.httpUrl" rows="5"></textarea>
 						<div class="clear"></div>
 						<input type="submit" value="提交" /> <a class="button button-space"
 							href="queryCpList">返回</a>

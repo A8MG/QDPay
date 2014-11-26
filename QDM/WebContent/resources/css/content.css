@@ -178,8 +178,8 @@ a.remove-link:hover {
 	height: 31px;
 }
 
-#otherPay {
-	height: 30px;
+#edit form .checkbox {
+	width: 50%;
 }
 
 .content-box table {
@@ -297,7 +297,8 @@ form .large-input {
 }
 
 form textarea {
-	width: 97.5% !important;
+	width: 50%;
+	max-width: 50%;
 }
 
 form select {
