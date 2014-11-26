@@ -29,6 +29,11 @@ public class GameWebBean {
 	private String cpName;
 
 	/**
+	 * 渠道名称
+	 */
+	private String channelName;
+
+	/**
 	 * 支付名称
 	 */
 	private String payName;
@@ -62,6 +67,14 @@ public class GameWebBean {
 		this.chance = chance;
 	}
 
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
 	public String getCpName() {
 		return cpName;
 	}
@@ -89,7 +102,8 @@ public class GameWebBean {
 	@Override
 	public String toString() {
 		return "GameWebBean [gameId=" + gameId + ", gameName=" + gameName
-				+ ", chance=" + chance + ", cpName=" + cpName + ", payName="
-				+ payName + ", modifyTime=" + modifyTime + "]";
+				+ ", chance=" + chance + ", cpName=" + cpName
+				+ ", channelName=" + channelName + ", payName=" + payName
+				+ ", modifyTime=" + modifyTime + "]";
 	}
 }

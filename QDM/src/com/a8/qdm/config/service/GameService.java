@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.a8.qdm.Page;
 import com.a8.qdm.config.action.bean.GameWebBean;
+import com.a8.qdm.config.dao.bean.ChannelGame;
 import com.a8.qdm.config.dao.bean.CpGame;
 import com.a8.qdm.config.dao.bean.Game;
 import com.a8.qdm.config.dao.bean.GamePay;
@@ -35,7 +36,7 @@ public interface GameService {
 	 * @throws Exception
 	 */
 	List<Game> queryAllGame(String cpId) throws Exception;
-	
+
 	/**
 	 * 查询产品数量
 	 * 
@@ -45,7 +46,7 @@ public interface GameService {
 	 * @throws Exception
 	 */
 	int queryGameCount(GameWebBean search) throws Exception;
-	
+
 	/**
 	 * 查询产品列表
 	 * 
@@ -66,24 +67,29 @@ public interface GameService {
 	 *            产品
 	 * @param cpGame
 	 *            合作方与产品关联
+	 * @param channelGameList
+	 *            渠道与产品关联集合
 	 * @param gamePayList
 	 *            产品与支付方式关联集合
 	 * @throws Exception
 	 */
-	void addGame(Game game, CpGame cpGame, List<GamePay> gamePayList)
-			throws Exception;
+	void addGame(Game game, CpGame cpGame, List<ChannelGame> channelGameList,
+			List<GamePay> gamePayList) throws Exception;
 
 	/**
 	 * 修改产品
 	 * 
 	 * @param game
 	 *            产品
+	 * @param channelGameList
+	 *            渠道与产品关联集合
 	 * @param gamePayList
 	 *            产品与支付方式关联集合
 	 * @throws Exception
 	 */
-	void updateGame(Game game, List<GamePay> gamePayList) throws Exception;
-	
+	void updateGame(Game game, List<ChannelGame> channelGameList,
+			List<GamePay> gamePayList) throws Exception;
+
 	/**
 	 * 删除产品
 	 * 

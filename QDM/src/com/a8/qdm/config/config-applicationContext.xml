@@ -71,11 +71,14 @@
 		<property name="actionDao" ref="actionDao"></property>
 		<property name="gameActionDao" ref="gameActionDao"></property>
 		<property name="cpGameDao" ref="cpGameDao"></property>
+		<property name="channelGameDao" ref="channelGameDao"></property>
 		<property name="gamePayDao" ref="gamePayDao"></property>
 	</bean>
 	<bean id="gameAction" class="com.a8.qdm.config.action.GameAction">
 		<property name="gameService" ref="gameService"></property>
 		<property name="cpService" ref="cpService"></property>
+		<property name="channelService" ref="channelService"></property>
+		<property name="channelGameService" ref="channelGameService"></property>
 		<property name="payService" ref="payService"></property>
 		<property name="gamePayService" ref="gamePayService"></property>
 	</bean>

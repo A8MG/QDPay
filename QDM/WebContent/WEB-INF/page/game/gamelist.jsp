@@ -53,6 +53,7 @@
 						<th>产品名称</th>
 						<th>通知概率</th>
 						<th>合作方</th>
+						<th>渠道</th>
 						<th>支付方式</th>
 						<th>时间</th>
 						<th id="operation">操作</th>
@@ -67,6 +68,7 @@
 							<td title="${gameWebBean.gameName}">${gameWebBean.gameName}</td>
 							<td title="${gameWebBean.chance}">${gameWebBean.chance}</td>
 							<td title="${gameWebBean.cpName}">${gameWebBean.cpName}</td>
+							<td limit="32" title="${gameWebBean.channelName}">${gameWebBean.channelName}</td>
 							<td limit="32" title="${gameWebBean.payName}">${gameWebBean.payName}</td>
 							<td limit="30">${gameWebBean.modifyTime}</td>
 							<td><a href="toUpdateGame?gameId=${gameWebBean.gameId}"
@@ -83,7 +85,7 @@
 						<td colspan="2"><a class="button bulk-actions" href="#"
 							onclick="dels(false, null, 'deleteGame')">删除选中</a><a
 							class="button" href="toAddGame">添加</a></td>
-						<td colspan="6">
+						<td colspan="7">
 							<div class="pagination">
 								<a style='color: #57a000;'>总：${page.totalCount} 条 /
 									${page.pageCount} 页</a> <a id="first" href="#">&laquo;首页</a> <a

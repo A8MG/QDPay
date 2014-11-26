@@ -46,15 +46,15 @@
 	</select>
 
 	<select id="queryGameList" parameterType="Map" resultMap="resultGameWebBean">
-		select
-		g.gameid,
-		g.gamename, g.chance, c.cpname,
-		date_format(g.modifytime,
-		'%Y-%m-%d %T')
-		modifytime from gameinfo g
-		,cp_game cg, cpinfo c
-		where g.gameid = cg.gameid
-		and cg.cpid = c.cpid
+		select g.gameid, g.gamename, g.chance, c.cpname,
+		group_concat(distinct(l.channelname)) channelname,
+		group_concat(distinct(p.payname)) payname,
+		date_format(g.modifytime, '%Y-%m-%d %T') modifytime from 
+		gameinfo g, cp_game cg, cpinfo c, game_pay gp,
+		payinfo p, channel_game lg, channelinfo l
+		where g.gameid = cg.gameid and cg.cpid = c.cpid
+		and g.gameid = gp.gameid and gp.payid = p.payid
+		and g.gameid = lg.gameid and lg.channelid = l.channelid
 		<if test="gameId != ''">
 			and g.gameid = #{gameId}
 		</if>
@@ -64,6 +64,7 @@
 		c.cpname
 		like
 		concat(#{cpName}, '%')
+		group by g.gameid
 		order by g.modifytime desc
 		limit
 		#{startIndex},

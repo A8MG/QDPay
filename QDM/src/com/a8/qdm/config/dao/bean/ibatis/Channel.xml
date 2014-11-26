@@ -6,10 +6,8 @@
 		id="parameterChannel" />
 	<resultMap type="com.a8.qdm.config.dao.bean.Channel" id="resultChannel" />
 
-
 	<select id="queryAllChannel" resultMap="resultChannel">
-		select channelid,
-		channelname from channelinfo order by modifytime desc
+		select channelid, channelname from channelinfo where channelid != '0'
 	</select>
 
 	<select id="queryChannelById" parameterType="String" resultMap="resultChannel">

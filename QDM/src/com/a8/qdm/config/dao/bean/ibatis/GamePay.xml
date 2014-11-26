@@ -9,12 +9,6 @@
 		desc
 	</select>
 
-	<select id="queryPayName" parameterType="String" resultType="String">
-		select p.payname from game_pay gp, payinfo p where gp.payid = p.payid
-		and gp.gameid = #{gameId} order by sortno
-		desc
-	</select>
-
 	<select id="queryGamePayList" parameterType="String" resultMap="gamePay">
 		select * from game_pay where payid in
 		<foreach item="payId" index="index" collection="array" open="("

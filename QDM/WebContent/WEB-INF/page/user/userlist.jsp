@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -59,7 +60,11 @@
 								value="${user.username}" /></td>
 							<td title="${user.username}">${user.username}</td>
 							<td title="${user.password}">${user.password}</td>
-							<td>${empty user.authority ? '管理员' : user.authority}</td>
+							<td><c:choose>
+									<c:when test="${user.authority eq '0'}">管理员</c:when>
+									<c:when test="${fn:startsWith(user.authority, '1')}">合作方</c:when>
+									<c:otherwise>渠道</c:otherwise>
+								</c:choose></td>
 							<td limit="30">${user.modifyTime}</td>
 							<td><a href="toUpdateUser?username=${user.username}"
 								title="修改"><img src="resources/images/icons/pencil.png"

@@ -1,6 +1,5 @@
 package com.a8.qdm.config.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -8,10 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.a8.qdm.Page;
 import com.a8.qdm.config.action.bean.GameWebBean;
 import com.a8.qdm.config.dao.ActionDao;
+import com.a8.qdm.config.dao.ChannelGameDao;
 import com.a8.qdm.config.dao.CpGameDao;
 import com.a8.qdm.config.dao.GameActionDao;
 import com.a8.qdm.config.dao.GameDao;
 import com.a8.qdm.config.dao.GamePayDao;
+import com.a8.qdm.config.dao.bean.ChannelGame;
 import com.a8.qdm.config.dao.bean.CpGame;
 import com.a8.qdm.config.dao.bean.Game;
 import com.a8.qdm.config.dao.bean.GameAction;
@@ -45,6 +46,11 @@ public class GameServiceImpl implements GameService {
 	 * 注入cpGameDao
 	 */
 	private CpGameDao cpGameDao;
+
+	/**
+	 * 注入channelGameDao
+	 */
+	private ChannelGameDao channelGameDao;
 
 	/**
 	 * 注入gamePayDao
@@ -99,23 +105,7 @@ public class GameServiceImpl implements GameService {
 	 */
 	public List<GameWebBean> queryGameList(GameWebBean search, Page page)
 			throws Exception {
-		List<GameWebBean> gameServiceBeanList = new ArrayList<GameWebBean>();
-
-		// 查询产品列表
-		gameServiceBeanList = gameDao.queryGameList(search, page);
-
-		// 设置支付名称
-		for (GameWebBean gameServiceBean : gameServiceBeanList) {
-			List<String> payNameList = gamePayDao.queryPayName(gameServiceBean
-					.getGameId());
-			if (payNameList != null && !payNameList.isEmpty()) {
-				String payName = payNameList.toString();
-				gameServiceBean.setPayName(payName.substring(1,
-						payName.length() - 1));
-			}
-		}
-
-		return gameServiceBeanList;
+		return gameDao.queryGameList(search, page);
 	}
 
 	/**
@@ -125,12 +115,15 @@ public class GameServiceImpl implements GameService {
 	 *            产品
 	 * @param cpGame
 	 *            合作方与产品关联
+	 * @param channelGameList
+	 *            渠道与产品关联集合
 	 * @param gamePayList
 	 *            产品与支付方式关联集合
 	 * @throws Exception
 	 */
 	@Transactional
-	public void addGame(Game game, CpGame cpGame, List<GamePay> gamePayList)
+	public void addGame(Game game, CpGame cpGame,
+			List<ChannelGame> channelGameList, List<GamePay> gamePayList)
 			throws Exception {
 
 		// 构建行为
@@ -150,6 +143,11 @@ public class GameServiceImpl implements GameService {
 		// 添加产品与合作方关系
 		cpGameDao.addCpGame(cpGame);
 
+		// 添加产品与渠道关系
+		if (!channelGameList.isEmpty()) {
+			channelGameDao.addChannelGame(channelGameList);
+		}
+
 		// 添加产品与支付方式关系
 		gamePayDao.addGamePay(gamePayList);
 	}
@@ -159,17 +157,27 @@ public class GameServiceImpl implements GameService {
 	 * 
 	 * @param game
 	 *            产品
+	 * @param channelGameList
+	 *            渠道与产品关联集合
 	 * @param gamePayList
 	 *            产品与支付方式关联集合
 	 * @throws Exception
 	 */
 	@Transactional
-	public void updateGame(Game game, List<GamePay> gamePayList)
-			throws Exception {
+	public void updateGame(Game game, List<ChannelGame> channelGameList,
+			List<GamePay> gamePayList) throws Exception {
 		String[] gameId = { game.getGameId() };
 
 		// 修改产品
 		gameDao.updateGame(game);
+
+		// 删除原关联渠道
+		channelGameDao.deleteChannelGame(gameId);
+
+		// 添加新关联渠道
+		if (!channelGameList.isEmpty()) {
+			channelGameDao.addChannelGame(channelGameList);
+		}
 
 		// 删除原关联支付
 		gamePayDao.deleteGamePay(gameId);
@@ -194,6 +202,9 @@ public class GameServiceImpl implements GameService {
 
 		// 删除产品与合作方关系
 		cpGameDao.deleteCpGame(gameId);
+
+		// 删除产品与渠道关系
+		channelGameDao.deleteChannelGame(gameId);
 
 		// 删除产品与支付方式关系
 		gamePayDao.deleteGamePay(gameId);
@@ -238,6 +249,14 @@ public class GameServiceImpl implements GameService {
 
 	public void setCpGameDao(CpGameDao cpGameDao) {
 		this.cpGameDao = cpGameDao;
+	}
+
+	public ChannelGameDao getChannelGameDao() {
+		return channelGameDao;
+	}
+
+	public void setChannelGameDao(ChannelGameDao channelGameDao) {
+		this.channelGameDao = channelGameDao;
 	}
 
 	public GamePayDao getGamePayDao() {

@@ -6,8 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.a8.qdm.InitAction;
+import com.a8.qdm.config.dao.bean.Channel;
 import com.a8.qdm.config.dao.bean.Cp;
 import com.a8.qdm.config.dao.bean.User;
+import com.a8.qdm.config.service.ChannelService;
 import com.a8.qdm.config.service.CpService;
 import com.a8.qdm.config.service.UserService;
 
@@ -38,6 +40,11 @@ public class UserAction extends InitAction {
 	 * 注入cpService
 	 */
 	private CpService cpService;
+
+	/**
+	 * 注入channelService
+	 */
+	private ChannelService channelService;
 
 	/**
 	 * 用户对象
@@ -75,6 +82,16 @@ public class UserAction extends InitAction {
 	private List<Cp> cpList;
 
 	/**
+	 * 渠道ID
+	 */
+	private String channelId;
+
+	/**
+	 * 渠道集合
+	 */
+	private List<Channel> channelList;
+
+	/**
 	 * 查询用户列表
 	 * 
 	 * @return 用户列表页面
@@ -83,7 +100,7 @@ public class UserAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------queryUserList start---------------");
-		
+
 		log.info("查询条件：" + search);
 		page.setTotalCount(userService.queryUserCount(search));
 		page.setPageCount();
@@ -105,6 +122,9 @@ public class UserAction extends InitAction {
 		// 入口日志
 		log.info("---------------toAddUser start---------------");
 		try {
+			channelList = channelService.queryAllChannel();
+			log.info("渠道：" + channelList);
+
 			cpList = cpService.queryAllCp();
 			log.info("合作方：" + cpList);
 		} catch (Exception e) {
@@ -129,8 +149,10 @@ public class UserAction extends InitAction {
 		log.info("---------------addUser start---------------");
 
 		try {
-			if (cpId != null) {
-				user.setAuthority(cpId);
+			if (channelId != null) {
+				user.setAuthority(user.getAuthority() + "|" + channelId);
+			} else if (cpId != null) {
+				user.setAuthority(user.getAuthority() + "|" + cpId);
 			}
 
 			userService.addUser(user);
@@ -231,6 +253,14 @@ public class UserAction extends InitAction {
 		this.cpService = cpService;
 	}
 
+	public ChannelService getChannelService() {
+		return channelService;
+	}
+
+	public void setChannelService(ChannelService channelService) {
+		this.channelService = channelService;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -285,5 +315,21 @@ public class UserAction extends InitAction {
 
 	public void setCpList(List<Cp> cpList) {
 		this.cpList = cpList;
+	}
+
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
+	}
+
+	public List<Channel> getChannelList() {
+		return channelList;
+	}
+
+	public void setChannelList(List<Channel> channelList) {
+		this.channelList = channelList;
 	}
 }

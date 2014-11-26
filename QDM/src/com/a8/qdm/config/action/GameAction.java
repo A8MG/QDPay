@@ -8,11 +8,15 @@ import org.apache.logging.log4j.Logger;
 
 import com.a8.qdm.InitAction;
 import com.a8.qdm.config.action.bean.GameWebBean;
+import com.a8.qdm.config.dao.bean.Channel;
+import com.a8.qdm.config.dao.bean.ChannelGame;
 import com.a8.qdm.config.dao.bean.Cp;
 import com.a8.qdm.config.dao.bean.CpGame;
 import com.a8.qdm.config.dao.bean.Game;
 import com.a8.qdm.config.dao.bean.GamePay;
 import com.a8.qdm.config.dao.bean.Pay;
+import com.a8.qdm.config.service.ChannelGameService;
+import com.a8.qdm.config.service.ChannelService;
 import com.a8.qdm.config.service.CpService;
 import com.a8.qdm.config.service.GamePayService;
 import com.a8.qdm.config.service.GameService;
@@ -47,6 +51,11 @@ public class GameAction extends InitAction {
 	private static String OTHER_PAY = "0";
 
 	/**
+	 * 无需渠道推广
+	 */
+	private static String NO_CHANNEL = "0";
+
+	/**
 	 * 注入gameService
 	 */
 	private GameService gameService;
@@ -55,6 +64,16 @@ public class GameAction extends InitAction {
 	 * 注入cpService
 	 */
 	private CpService cpService;
+
+	/**
+	 * 注入channelService
+	 */
+	private ChannelService channelService;
+
+	/**
+	 * 注入channelGameService
+	 */
+	private ChannelGameService channelGameService;
 
 	/**
 	 * 注入payService
@@ -80,6 +99,16 @@ public class GameAction extends InitAction {
 	 * 合作方集合
 	 */
 	private List<Cp> cpList;
+
+	/**
+	 * 渠道ID集合
+	 */
+	private List<String> channelIdList;
+
+	/**
+	 * 渠道集合
+	 */
+	private List<Channel> channelList;
 
 	/**
 	 * 支付方式集合
@@ -163,6 +192,10 @@ public class GameAction extends InitAction {
 			cpList = cpService.queryAllCp();
 			log.info("合作方：" + cpList);
 
+			// 渠道
+			channelList = channelService.queryAllChannel();
+			log.info("渠道：" + channelList);
+
 			// 查询支付方式
 			payList = payService.queryAllPay();
 			log.info("支付方式：" + payList);
@@ -186,43 +219,51 @@ public class GameAction extends InitAction {
 
 		// 入口日志
 		log.info("---------------addGame start---------------");
-		List<GamePay> gamePayList = new ArrayList<GamePay>();
 
 		try {
-			if (cpId != null && !cpId.isEmpty()) {
-				if (firstPayId != null && !firstPayId.isEmpty()) {
+			// 组装关联的合作方
+			CpGame cpGame = new CpGame();
+			cpGame.setCpId(cpId);
+			cpGame.setGameId(game.getGameId());
+			log.info("关联的合作方：" + cpId);
 
-					// 组装关联的合作方
-					CpGame cpGame = new CpGame();
-					cpGame.setCpId(cpId);
-					cpGame.setGameId(game.getGameId());
-					log.info("关联的合作方：" + cpId);
-
-					// 组装关联的支付方式
-					GamePay firstGamePay = new GamePay();
-					firstGamePay.setGameId(game.getGameId());
-					firstGamePay.setPayId(firstPayId);
-					firstGamePay.setSortNo(FIRST_PAY);
-					gamePayList.add(firstGamePay);
-					if (choosedPayList != null && !choosedPayList.isEmpty()) {
-						for (String payId : choosedPayList) {
-							GamePay otherGamePay = new GamePay();
-							otherGamePay.setGameId(game.getGameId());
-							otherGamePay.setPayId(payId);
-							otherGamePay.setSortNo(OTHER_PAY);
-							gamePayList.add(otherGamePay);
-						}
-					}
-					log.info("关联的支付方式：" + gamePayList);
-
-					// 添加产品及关联关系
-					gameService.addGame(game, cpGame, gamePayList);
-				} else {
-					log.info("请选择关联的支付方式，如果没有选择项，请添加支付方式");
+			// 组装关联的渠道
+			List<ChannelGame> channelGameList = new ArrayList<ChannelGame>();
+			if (channelIdList != null && !channelIdList.isEmpty()) {
+				for (String channelId : channelIdList) {
+					ChannelGame channelGame = new ChannelGame();
+					channelGame.setChannelId(channelId);
+					channelGame.setGameId(game.getGameId());
+					channelGameList.add(channelGame);
 				}
 			} else {
-				log.info("请选择合作方，如果没有选择项，请添加合作方");
+				ChannelGame channelGame = new ChannelGame();
+				channelGame.setChannelId(NO_CHANNEL);
+				channelGame.setGameId(game.getGameId());
+				channelGameList.add(channelGame);
 			}
+			log.info("关联的渠道：" + channelGameList);
+
+			// 组装关联的支付方式
+			List<GamePay> gamePayList = new ArrayList<GamePay>();
+			GamePay firstGamePay = new GamePay();
+			firstGamePay.setGameId(game.getGameId());
+			firstGamePay.setPayId(firstPayId);
+			firstGamePay.setSortNo(FIRST_PAY);
+			gamePayList.add(firstGamePay);
+			if (choosedPayList != null && !choosedPayList.isEmpty()) {
+				for (String payId : choosedPayList) {
+					GamePay otherGamePay = new GamePay();
+					otherGamePay.setGameId(game.getGameId());
+					otherGamePay.setPayId(payId);
+					otherGamePay.setSortNo(OTHER_PAY);
+					gamePayList.add(otherGamePay);
+				}
+			}
+			log.info("关联的支付方式：" + gamePayList);
+
+			// 添加产品及关联关系
+			gameService.addGame(game, cpGame, channelGameList, gamePayList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
@@ -247,6 +288,13 @@ public class GameAction extends InitAction {
 			// 查询产品及关联合作方
 			gameWebBean = gameService.queryGameById(gameId);
 			log.info("准备修改的产品：" + gameWebBean);
+
+			// 查询所有渠道
+			channelList = channelService.queryAllChannel();
+
+			// 查询已选渠道
+			channelIdList = channelGameService.queryChannelId(gameId);
+			log.info("修改产品已选渠道：" + channelIdList);
 
 			// 查询所有支付方式
 			payList = payService.queryAllPay();
@@ -285,6 +333,24 @@ public class GameAction extends InitAction {
 
 			// 产品
 			game.setChance(gameWebBean.getChance());
+			log.info("修改后的产品信息：" + game);
+
+			// 渠道
+			List<ChannelGame> channelGameList = new ArrayList<ChannelGame>();
+			if (channelIdList != null && !channelIdList.isEmpty()) {
+				for (String channelId : channelIdList) {
+					ChannelGame channelGame = new ChannelGame();
+					channelGame.setChannelId(channelId);
+					channelGame.setGameId(game.getGameId());
+					channelGameList.add(channelGame);
+				}
+			} else {
+				ChannelGame channelGame = new ChannelGame();
+				channelGame.setChannelId(NO_CHANNEL);
+				channelGame.setGameId(game.getGameId());
+				channelGameList.add(channelGame);
+			}
+			log.info("关联的渠道：" + channelGameList);
 
 			// 首选支付
 			GamePay firstGamePay = new GamePay();
@@ -303,11 +369,10 @@ public class GameAction extends InitAction {
 					gamePayList.add(otherGamePay);
 				}
 			}
+			log.info("修改后产品关联的支付方式：" + gamePayList);
 
 			// 修改产品及支付方式
-			gameService.updateGame(game, gamePayList);
-			log.info("修改后的产品信息：" + game);
-			log.info("修改后产品关联的支付方式：" + gamePayList);
+			gameService.updateGame(game, channelGameList, gamePayList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
@@ -358,6 +423,22 @@ public class GameAction extends InitAction {
 		this.cpService = cpService;
 	}
 
+	public ChannelService getChannelService() {
+		return channelService;
+	}
+
+	public void setChannelService(ChannelService channelService) {
+		this.channelService = channelService;
+	}
+
+	public ChannelGameService getChannelGameService() {
+		return channelGameService;
+	}
+
+	public void setChannelGameService(ChannelGameService channelGameService) {
+		this.channelGameService = channelGameService;
+	}
+
 	public PayService getPayService() {
 		return payService;
 	}
@@ -396,6 +477,22 @@ public class GameAction extends InitAction {
 
 	public void setCpList(List<Cp> cpList) {
 		this.cpList = cpList;
+	}
+
+	public List<String> getChannelIdList() {
+		return channelIdList;
+	}
+
+	public void setChannelIdList(List<String> channelIdList) {
+		this.channelIdList = channelIdList;
+	}
+
+	public List<Channel> getChannelList() {
+		return channelList;
+	}
+
+	public void setChannelList(List<Channel> channelList) {
+		this.channelList = channelList;
 	}
 
 	public List<Pay> getPayList() {

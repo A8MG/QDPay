@@ -6,9 +6,7 @@
 	<resultMap type="com.a8.qdm.config.dao.bean.Pay" id="resultPay" />
 
 	<select id="queryAllPay" resultMap="resultPay">
-		select payid, payname from
-		payinfo order
-		by modifytime desc
+		select payid, payname from payinfo
 	</select>
 
 	<select id="queryPayById" parameterType="String" resultMap="resultPay">

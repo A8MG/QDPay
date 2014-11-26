@@ -15,10 +15,16 @@
 		</foreach>
 	</select>
 
+	<select id="queryChannelId" parameterType="String" resultType="String">
+		select channelid from channel_game where gameid = #{gameId}
+	</select>
+
 	<insert id="addChannelGame" parameterMap="parameterChannelGame">
-		insert into
-		channel_game (channelid,
-		gameid) values (#{channelId}, #{gameId})
+		insert into channel_game (channelid, gameid) values
+		<foreach collection="list" item="channelGame" index="index"
+			separator=",">
+			(#{channelGame.channelId}, #{channelGame.gameId})
+		</foreach>
 	</insert>
 
 	<delete id="deleteChannelGame" parameterType="String">

@@ -1,5 +1,7 @@
 package com.a8.qdm.config.dao;
 
+import java.util.List;
+
 import com.a8.qdm.config.dao.bean.ChannelGame;
 
 /**
@@ -11,13 +13,23 @@ import com.a8.qdm.config.dao.bean.ChannelGame;
 public interface ChannelGameDao {
 
 	/**
-	 * 添加渠道与游戏关联关系
+	 * 查询渠道ID集合
 	 * 
-	 * @param channelGame
-	 *            渠道与游戏关联类
+	 * @param gameId
+	 *            游戏ID
+	 * @return
 	 * @throws Exception
 	 */
-	void addChannelGame(ChannelGame channelGame) throws Exception;
+	List<String> queryChannelId(String gameId) throws Exception;
+
+	/**
+	 * 添加渠道与游戏关联关系
+	 * 
+	 * @param channelGameList
+	 *            渠道与游戏关联类集合
+	 * @throws Exception
+	 */
+	void addChannelGame(List<ChannelGame> channelGameList) throws Exception;
 
 	/**
 	 * 删除渠道与游戏关联关系

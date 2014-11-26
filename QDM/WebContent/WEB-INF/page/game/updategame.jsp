@@ -51,7 +51,11 @@
 						<s:select id="chance" name="gameWebBean.chance"
 							list="{'100%', '98%', '96%', '94%', '92%', '90%'}" theme="simple" />
 						<label>合作方</label> <input type="text" id="cpName"
-							value="${gameWebBean.cpName}" readonly="readonly" /> <label>首选支付方式</label>
+							value="${gameWebBean.cpName}" readonly="readonly" /> <label>渠道</label>
+						<s:checkboxlist id="channelId" name="channelIdList"
+							list="channelList" listKey="channelId" listValue="channelName"
+							theme="simple" />
+						<label>首选支付方式</label>
 						<s:select id="firstPay" name="firstPayId" list="payList"
 							listKey="payId" listValue="payName" onchange="getOtherPay()"
 							theme="simple" />

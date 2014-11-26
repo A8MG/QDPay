@@ -46,6 +46,10 @@
 						<label>合作方</label>
 						<s:select id="cpId" name="cpId" list="cpList" listKey="cpId"
 							listValue="cpName" theme="simple" />
+						<label>渠道</label>
+						<s:checkboxlist id="channelId" name="channelIdList"
+							list="channelList" listKey="channelId" listValue="channelName"
+							theme="simple" />
 						<label>首选支付方式</label>
 						<s:select id="firstPay" name="firstPayId" list="payList"
 							listKey="payId" listValue="payName" onchange="getOtherPay()"

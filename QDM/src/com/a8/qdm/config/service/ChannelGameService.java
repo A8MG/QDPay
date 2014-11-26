@@ -1,5 +1,7 @@
 package com.a8.qdm.config.service;
 
+import java.util.List;
+
 /**
  * 渠道与游戏关联Service
  * 
@@ -7,6 +9,16 @@ package com.a8.qdm.config.service;
  * 
  */
 public interface ChannelGameService {
+
+	/**
+	 * 查询渠道ID集合
+	 * 
+	 * @param gameId
+	 *            游戏ID
+	 * @return
+	 * @throws Exception
+	 */
+	List<String> queryChannelId(String gameId) throws Exception;
 
 	/**
 	 * 渠道是否绑定产品

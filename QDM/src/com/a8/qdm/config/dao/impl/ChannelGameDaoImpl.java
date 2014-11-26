@@ -17,14 +17,27 @@ public class ChannelGameDaoImpl extends SqlSessionDaoSupport implements
 		ChannelGameDao {
 
 	/**
-	 * 添加渠道与游戏关联关系
+	 * 查询渠道ID集合
 	 * 
-	 * @param channelGame
-	 *            渠道与游戏关联类
+	 * @param gameId
+	 *            游戏ID
+	 * @return
 	 * @throws Exception
 	 */
-	public void addChannelGame(ChannelGame channelGame) throws Exception {
-		this.getSqlSession().insert("addChannelGame", channelGame);
+	public List<String> queryChannelId(String gameId) throws Exception {
+		return this.getSqlSession().selectList("queryChannelId", gameId);
+	}
+
+	/**
+	 * 添加渠道与游戏关联关系
+	 * 
+	 * @param channelGameList
+	 *            渠道与游戏关联类集合
+	 * @throws Exception
+	 */
+	public void addChannelGame(List<ChannelGame> channelGameList)
+			throws Exception {
+		this.getSqlSession().insert("addChannelGame", channelGameList);
 	}
 
 	/**

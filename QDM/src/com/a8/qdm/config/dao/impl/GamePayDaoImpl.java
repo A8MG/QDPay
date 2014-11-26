@@ -28,18 +28,6 @@ public class GamePayDaoImpl extends SqlSessionDaoSupport implements GamePayDao {
 	}
 
 	/**
-	 * 查询支付列表
-	 * 
-	 * @param gameId
-	 *            游戏ID
-	 * @return payNameList
-	 * @throws Exception
-	 */
-	public List<String> queryPayName(String gameId) throws Exception {
-		return this.getSqlSession().selectList("queryPayName", gameId);
-	}
-
-	/**
 	 * 添加游戏与支付关联关系
 	 * 
 	 * @param gamePayList

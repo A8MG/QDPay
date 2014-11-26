@@ -58,10 +58,10 @@
 							<s:select id="channelId" name="channelId" list="channelList"
 								listKey="channelId" listValue="channelName" theme="simple" />
 						</div>
-						<div id="cp">
+						<div id="cp" style="display: none;">
 							<label>合作方</label>
 							<s:select id="cpId" name="cpId" list="cpList" listKey="cpId"
-								listValue="cpName" theme="simple" />
+								listValue="cpName" theme="simple" disabled="disabled" />
 						</div>
 						<div class="clear"></div>
 						<input type="submit" value="提交" /> <a class="button button-space"

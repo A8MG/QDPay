@@ -23,16 +23,6 @@ public interface GamePayDao {
 	List<String> queryPayId(String gameId) throws Exception;
 
 	/**
-	 * 查询支付列表
-	 * 
-	 * @param gameId
-	 *            游戏ID
-	 * @return payNameList
-	 * @throws Exception
-	 */
-	List<String> queryPayName(String gameId) throws Exception;
-
-	/**
 	 * 添加产品与支付关联关系
 	 * 
 	 * @param gamePayList

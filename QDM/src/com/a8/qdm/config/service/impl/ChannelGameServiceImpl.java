@@ -1,5 +1,7 @@
 package com.a8.qdm.config.service.impl;
 
+import java.util.List;
+
 import com.a8.qdm.config.dao.ChannelGameDao;
 import com.a8.qdm.config.service.ChannelGameService;
 
@@ -15,6 +17,18 @@ public class ChannelGameServiceImpl implements ChannelGameService {
 	 * channelGameDao接口注入
 	 */
 	private ChannelGameDao channelGameDao;
+
+	/**
+	 * 查询渠道ID集合
+	 * 
+	 * @param gameId
+	 *            游戏ID
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> queryChannelId(String gameId) throws Exception {
+		return channelGameDao.queryChannelId(gameId);
+	}
 
 	/**
 	 * 渠道是否绑定产品
