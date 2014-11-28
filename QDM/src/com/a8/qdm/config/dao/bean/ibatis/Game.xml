@@ -9,6 +9,14 @@
 	<resultMap type="com.a8.qdm.config.action.bean.GameWebBean"
 		id="resultGameWebBean" />
 
+	<select id="queryGameListById" parameterType="String" resultMap="resultGame">
+		select g.gameid, g.gamename from channel_game cg, gameinfo g
+		where
+		cg.gameid = g.gameid and cg.channelid = #{channelId}
+		order by
+		cg.modifytime desc
+	</select>
+
 	<select id="queryGameById" parameterType="String" resultMap="resultGameWebBean">
 		select g.gameid, g.gamename, g.chance, c.cpname from gameinfo g
 		,cp_game cg,

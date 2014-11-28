@@ -20,6 +20,18 @@ import com.a8.qdm.config.dao.bean.Game;
 public class GameDaoImpl extends SqlSessionDaoSupport implements GameDao {
 
 	/**
+	 * 根据渠道ID查询产品集合
+	 * 
+	 * @param channelId
+	 *            渠道ID
+	 * @return 产品集合
+	 * @throws Exception
+	 */
+	public List<Game> queryGameListById(String channelId) throws Exception {
+		return this.getSqlSession().selectList("queryGameListById", channelId);
+	}
+
+	/**
 	 * 根据产品ID查询
 	 * 
 	 * @param gameId

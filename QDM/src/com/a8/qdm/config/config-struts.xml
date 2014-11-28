@@ -124,6 +124,9 @@
 		<action name="checkGameId" class="com.a8.qdm.config.ajax.GameAjax"
 			method="checkGameId">
 		</action>
+		<action name="ajaxGameList" class="com.a8.qdm.config.ajax.GameAjax"
+			method="ajaxGameList">
+		</action>
 
 		<action name="queryPayList" class="com.a8.qdm.config.action.PayAction"
 			method="query">

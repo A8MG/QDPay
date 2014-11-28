@@ -7,30 +7,56 @@
 <link rel="stylesheet" href="resources/css/reset.css" />
 <link rel="stylesheet" href="resources/css/content.css" />
 <link rel="stylesheet" href="resources/css/invalid.css" />
+<link rel="stylesheet"
+	href="resources/scripts/jquery-ui/jquery-ui.min.css" />
 <script src="resources/scripts/jquery.min.js"></script>
+<script src="resources/scripts/jquery-ui/jquery-ui.min.js"></script>
+<script src="resources/scripts/jquery-ui/datepicker-zh-CN.js"></script>
 <script src="resources/scripts/configuration.js"></script>
 <script src="resources/scripts/common.js"></script>
+<script>
+	$(function() {
+		$("#dayTime").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date()
+		});
+
+		$("#channelId").change(function() {
+			$.ajax({
+				url : "ajaxGameList",
+				data : {
+					channelId : $(this).val()
+				},
+				success : function(result) {
+					$("#gameId").html(result);
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<div id="search">
-		<form action="queryActionList">
-			<input id="currentPage" name="page.currentPage" type="hidden"
-				value="${page.currentPage}" /> <input id="pageCount" type="hidden"
-				value="${page.pageCount}" />
+		<form action="queryActiveList">
 			<table>
 				<thead>
 					<tr>
+						<th><label>渠道</label></th>
 						<th><label>产品</label></th>
-						<th></th>
-						<th></th>
+						<th><label>时间</label></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><s:select id="gameId" name="search" list="gameList"
-								listKey="gameId" listValue="gameName" headerKey=""
-								headerValue="" theme="simple" /></td>
+						<td><s:select id="channelId" name="channelId"
+								list="channelList" listKey="channelId" listValue="channelName"
+								theme="simple" /></td>
+						<td><s:select id="gameId" name="gameId" list="gameList"
+								listKey="gameId" listValue="gameName" theme="simple" /></td>
+						<td><input type="text" id="dayTime" name="dayTime"
+							value="${dayTime}" readonly="readonly" /></td>
 						<td><input id="searchButton" type="button" value="查询" /></td>
 					</tr>
 				</tbody>
@@ -40,52 +66,28 @@
 
 	<div class="content-box">
 		<div class="content-box-header">
-			<h3>访问信息</h3>
+			<h3>用户活跃信息</h3>
 		</div>
 		<div class="content-box-content">
 			<table>
 				<thead>
 					<tr>
-						<th>产品</th>
-						<th>使用次数</th>
-						<th>交易次数</th>
-						<th>交易率</th>
-						<th style="width: 14%">时间</th>
+						<th>日新增用户数</th>
+						<th>日活跃用户数</th>
+						<th>周活跃用户数</th>
+						<th>日付费意愿用户数</th>
+						<th>流失用户数</th>
 					</tr>
 				</thead>
-				<tbody>
-					<c:forEach items="${actionList}" var="action">
-						<tr>
-							<td title="${action.gameName}" limit="30">${action.gameName}</td>
-							<td>${action.openTimes}</td>
-							<td>${action.confirmTimes}</td>
-							<td>${action.payRate}</td>
-							<td limit="30">${action.modifyTime}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-				<tfoot>
+				<tbody style="border-bottom: 0px;">
 					<tr>
-						<td colspan="5">
-							<div class="pagination">
-								<a style='color: #57a000;'>总：${page.totalCount} 条 /
-									${page.pageCount} 页</a> <a id="first" href="#">&laquo;首页</a> <a
-									id="previous" href="#">&laquo;上一页</a>
-								<c:forEach begin="${begin}" end="${end}" var="pageNo">
-									<c:choose>
-										<c:when test="${pageNo eq page.currentPage}">
-											<a href="#" class="number current">${pageNo}</a>
-										</c:when>
-										<c:otherwise>
-											<a href="#" class="number">${pageNo}</a>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<a id="next" href="#">下一页&raquo;</a> <a id="last" href="#">尾页&raquo;</a>
-							</div>
-						</td>
+						<td>${activeWebBean.addNo}</td>
+						<td>${activeWebBean.dayActiveNo}</td>
+						<td>${activeWebBean.weekActiveNo}</td>
+						<td>${activeWebBean.prePayNo}</td>
+						<td>${activeWebBean.loseNo}</td>
 					</tr>
-				</tfoot>
+				</tbody>
 			</table>
 		</div>
 	</div>

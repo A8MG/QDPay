@@ -58,6 +58,18 @@ public class GameServiceImpl implements GameService {
 	private GamePayDao gamePayDao;
 
 	/**
+	 * 根据渠道ID查询产品集合
+	 * 
+	 * @param channelId
+	 *            渠道ID
+	 * @return 产品集合
+	 * @throws Exception
+	 */
+	public List<Game> queryGameListById(String channelId) throws Exception {
+		return gameDao.queryGameListById(channelId);
+	}
+
+	/**
 	 * 根据产品ID查询
 	 * 
 	 * @param gameId

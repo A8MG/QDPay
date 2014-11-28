@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.a8.qdm.config.action.bean.GameWebBean;
+import com.a8.qdm.config.dao.bean.Game;
 import com.a8.qdm.config.dao.bean.Pay;
 import com.a8.qdm.config.service.GameService;
 import com.a8.qdm.config.service.PayService;
@@ -45,6 +46,11 @@ public class GameAjax extends ActionSupport {
 	 * 需要校验的值
 	 */
 	private String value;
+
+	/**
+	 * 渠道ID
+	 */
+	private String channelId;
 
 	/**
 	 * 注入payService
@@ -146,6 +152,42 @@ public class GameAjax extends ActionSupport {
 		return null;
 	}
 
+	public String ajaxGameList() {
+
+		// 入口日志
+		log.info("---------------ajaxGameList start---------------");
+		StringBuilder gameSelect = new StringBuilder();
+
+		try {
+			// 根据渠道ID查询产品集合
+			log.info("渠道：" + channelId);
+			List<Game> gameList = gameService.queryGameListById(channelId);
+			log.info("产品：" + gameList);
+
+			// 拼接下拉列表
+			if (gameList != null && !gameList.isEmpty()) {
+				gameSelect.append("<select id='gameId' name='gameId'>");
+				for (Game game : gameList) {
+					gameSelect.append("<option value='")
+							.append(game.getGameId()).append("'>")
+							.append(game.getGameName()).append("</option>")
+							.append("</select>");
+				}
+			}
+
+			// 返回给ajax
+			ServletActionContext.getResponse().getWriter().print(gameSelect);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+
+		// 出口日志
+		log.info("---------------ajaxGameList end---------------");
+
+		return null;
+	}
+
 	public String getFirstPayId() {
 		return firstPayId;
 	}
@@ -168,6 +210,14 @@ public class GameAjax extends ActionSupport {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
 	}
 
 	public PayService getPayService() {

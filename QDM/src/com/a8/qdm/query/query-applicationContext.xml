@@ -28,6 +28,8 @@
 	</bean>
 	<bean id="activeAction" class="com.a8.qdm.query.action.ActiveAction">
 		<property name="activeService" ref="activeService"></property>
+		<property name="channelService" ref="channelService"></property>
+		<property name="gameService" ref="gameService"></property>
 	</bean>
 
 	<bean id="payOrderDao" class="com.a8.qdm.query.dao.impl.PayOrderDaoImpl">

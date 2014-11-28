@@ -17,8 +17,13 @@
 					target="iframepage">欢迎页</a></li>
 				<li><a class="nav-top-item">统计分析</a>
 					<ul>
-						<li><a href="queryOrderList" target="iframepage">订单</a></li>
-						<li><a href="queryActionList" target="iframepage">访问数据</a></li>
+						<c:if test="${session.channelId eq ''}">
+							<li><a href="queryOrderList" target="iframepage">订单</a></li>
+							<li><a href="queryActionList" target="iframepage">访问数据</a></li>
+						</c:if>
+						<c:if test="${session.cpId eq ''}">
+							<li><a href="queryActiveList" target="iframepage">用户活跃数据</a></li>
+						</c:if>
 					</ul></li>
 				<c:if test="${session.user.authority eq '0'}">
 					<li><a class="nav-top-item">运营管理</a>

@@ -19,7 +19,7 @@
 		$.ajax({
 			url : "ajaxPay",
 			data : {
-				firstPayId : firstPayId,
+				firstPayId : firstPayId
 			},
 			success : function(result) {
 				$("#otherPay").html(result);

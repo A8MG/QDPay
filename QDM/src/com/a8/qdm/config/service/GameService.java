@@ -16,6 +16,16 @@ import com.a8.qdm.config.dao.bean.GamePay;
  *
  */
 public interface GameService {
+	
+	/**
+	 * 根据渠道ID查询产品集合
+	 * 
+	 * @param channelId
+	 *            渠道ID
+	 * @return 产品集合
+	 * @throws Exception
+	 */
+	List<Game> queryGameListById(String channelId) throws Exception;
 
 	/**
 	 * 根据产品ID查询

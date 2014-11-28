@@ -19,6 +19,7 @@
 		$("#startTime").datepicker({
 			changeMonth : true,
 			changeYear : true,
+			maxDate : new Date(),
 			onClose : function(selectedDate) {
 				$("#endTime").datepicker("option", "minDate", selectedDate);
 			}
@@ -27,6 +28,7 @@
 		$("#endTime").datepicker({
 			changeMonth : true,
 			changeYear : true,
+			maxDate : new Date(),
 			onClose : function(selectedDate) {
 				$("#startTime").datepicker("option", "maxDate", selectedDate);
 			}
