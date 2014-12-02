@@ -30,6 +30,9 @@
 			changeYear : true,
 			maxDate : new Date(),
 			onClose : function(selectedDate) {
+				if (selectedDate == "") {
+					selectedDate = new Date();
+				}
 				$("#startTime").datepicker("option", "maxDate", selectedDate);
 			}
 		});
