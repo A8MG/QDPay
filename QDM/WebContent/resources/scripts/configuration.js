@@ -23,7 +23,6 @@ $(function() {
 				if ($(this).parent().find("ul li").length > 0) {
 					$(this).parent().find("ul li:first-child a").addClass("current");
 					$("iframe").attr("src", $(this).parent().find("ul li:first-child a").attr("href"));
-					$("iframe").reload();
 				}
 			}
 		}
