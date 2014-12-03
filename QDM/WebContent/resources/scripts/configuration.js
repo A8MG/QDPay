@@ -1,5 +1,16 @@
 $(function() {
 	
+	// iframe
+	$("iframe").load(function() {
+		var windowHeight = $(document).height();
+		var iframeHeight = $(this).contents().find("body").height();
+		if (iframeHeight < windowHeight - 110) {
+			$(this).height(windowHeight - 110);
+		} else {
+			$(this).height(iframeHeight);
+		}
+	});
+	
 	//Sidebar Accordion Menu:
 		
 	$("#main-nav li ul").hide();
